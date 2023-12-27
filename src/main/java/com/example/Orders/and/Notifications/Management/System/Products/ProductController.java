@@ -34,7 +34,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
-    @PutMapping("/update-quantity")
+    @PutMapping("/update/quantity")
     public ResponseEntity<List<Product>> updateQuantity(@RequestBody Map<Product, Integer> orderedProducts) {
         List<Product> failedUpdates = new ArrayList<>();
 

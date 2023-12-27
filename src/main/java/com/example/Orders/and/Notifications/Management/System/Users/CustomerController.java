@@ -1,12 +1,15 @@
 package com.example.Orders.and.Notifications.Management.System.Users;
 
+import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 @RestController
@@ -51,6 +54,21 @@ public class CustomerController {
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+    @PutMapping("/update/Customer/Balance")
+    public ResponseEntity<List<User>> updateBalance(@RequestBody Map<User,Long> usersBalance){
+        List<User> noEnoughMoney = new ArrayList<>();
+        for (Map.Entry<User, Long> entry : usersBalance.entrySet()) {
+            User user = entry.getKey();
+            Long balance = entry.getValue();
+            if(!customerService.updateBalance(user,balance)){
+                noEnoughMoney.add(user);
+            }
+        }
+        if(noEnoughMoney.isEmpty()){
+            return new ResponseEntity<>(noEnoughMoney, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(noEnoughMoney, HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

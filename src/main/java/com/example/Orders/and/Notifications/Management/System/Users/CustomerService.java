@@ -25,4 +25,12 @@ public class CustomerService implements UserService {
     public List<User> getAllUsers(){
         return customerRepository.getUsers();
     }
+
+    public Boolean updateBalance(User user,Long balance){
+        if(user.getBalance() - balance >= 0){
+            user.setBalance(user.getBalance() - balance);
+            return true;
+        }
+        return false;
+    }
 }
