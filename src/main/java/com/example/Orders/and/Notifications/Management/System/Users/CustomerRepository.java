@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Repository
-public class UserRepository {
+public class CustomerRepository implements UserRepositoryInterface {
     List<User> users;
-    UserRepository(){
+    CustomerRepository(){
         users = new ArrayList<>();
     }
-
+    @Override
     public User saveUser(User user) {
         users.add(user);
         return user;
     }
-
+    @Override
     public User getUserByUserName(String username) {
         for (User user : users) {
             if (Objects.equals(user.getUserName(), username)) {
@@ -25,7 +25,7 @@ public class UserRepository {
         }
         return null;
     }
-
+    @Override
     public List<User> getUsers(){
         return users;
     }

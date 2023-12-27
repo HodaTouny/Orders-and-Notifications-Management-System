@@ -1,12 +1,12 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
-
-import com.example.Orders.and.Notifications.Management.System.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/product/api")
@@ -25,14 +25,36 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
-    @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productService.getAllProducts();
+    @GetMapping("products")
+    public ResponseEntity<Map<Product,Integer>> getProducts() {
+        Map<Product,Integer> products = productService.getAllProducts();
         if (!products.isEmpty()) {
             return new ResponseEntity<>(products, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+    @PutMapping("/update-quantity")
+    public ResponseEntity<List<Product>> updateQuantity(@RequestBody Map<Product, Integer> orderedProducts) {
+        List<Product> failedUpdates = new ArrayList<>();
 
+        for (Map.Entry<Product, Integer> entry : orderedProducts.entrySet()) {
+            Product product = entry.getKey();
+            Integer newQuantity = entry.getValue();
+
+            boolean updateResult = productService.updateQuantity(product, newQuantity);
+
+            if (!updateResult) {
+                failedUpdates.add(product);
+            }
+        }
+
+        if (failedUpdates.isEmpty()) {
+            return new ResponseEntity<>(failedUpdates, HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(failedUpdates,HttpStatus.NOT_ACCEPTABLE);
+
+        }
+    }
 }

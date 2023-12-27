@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class ProductService {
     ProductRepository productRepository;
@@ -18,10 +20,19 @@ public class ProductService {
     }
 
     public Product getProductByName(String Name){
-        return productRepository.getProductbyName(Name);
+        return productRepository.getProductByName(Name);
     }
 
-    public List<Product> getAllProducts(){
+
+    public boolean updateQuantity(Product product, int quantity) {
+        int currentQuantity = productRepository.getQuantity(product);
+        if (currentQuantity >= quantity) {
+               return productRepository.updateQuantity(product, currentQuantity - quantity);
+           }
+        return false;
+    }
+
+    public Map<Product, Integer> getAllProducts(){
         return productRepository.getProducts();
     }
 }

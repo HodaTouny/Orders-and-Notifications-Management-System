@@ -9,6 +9,7 @@ public class Product {
     Long price;
     Category category;
 
+
     public Product (){}
 
     public Long getSerialNumber() {

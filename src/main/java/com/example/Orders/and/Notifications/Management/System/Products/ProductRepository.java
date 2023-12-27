@@ -1,32 +1,61 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
+import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
-public class ProductRepository {
-    List<Product>products;
+public class ProductRepository implements ProductRepositoryInterface {
+    Map<Product, Integer> products;
     ProductRepository(){
-        products = new ArrayList<>();
+        products = new HashMap();
     }
-
+    @Override
     public Product saveproduct(Product product) {
-        products.add(product);
+        if (products.containsKey(product)) {
+            int quantity = products.get(product);
+            products.put(product, quantity + 1);
+        } else {
+
+            products.put(product, 1);
+        }
         return product;
+
+    }
+    @Override
+    public boolean updateQuantity(Product product, int quantity) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            if (entry.getKey().equals(product)) {
+                products.put(product, quantity);
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public Product getProductbyName(String name) {
-        for (Product product : products) {
-            if (name == product.getName()) {
+    public int getQuantity(Product product) {
+        return products.getOrDefault(product, 0);
+    }
+
+
+    @Override
+    public Product getProductByName(String name) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            Product product = entry.getKey();
+            if (product.getName().equals(name)) {
                 return product;
             }
         }
         return null;
     }
-
-    public List<Product> getProducts(){
+    @Override
+    public Map<Product,Integer> getProducts() {
         return products;
     }
+
 
 }

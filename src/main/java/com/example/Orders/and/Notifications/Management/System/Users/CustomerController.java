@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Vector;
 
 @RestController
-@RequestMapping("/user/api")
-public class UserController {
-    UserService userService;
+@RequestMapping("/customer/api")
+public class CustomerController {
+    CustomerService customerService;
     @Autowired
-    UserController(UserService userService){
-        this.userService = userService;
+    CustomerController( CustomerService customerService){
+        this.customerService =  customerService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<User> Register(@RequestBody User user) {
-        User savedUser = userService.AddNewUser(user);
+        User savedUser =  customerService.AddNewUser(user);
         if(user != null) {
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         }
@@ -33,7 +33,7 @@ public class UserController {
             String userName = loginData.get(0);
             String password = loginData.get(1);
 
-            User savedUser = userService.getUserByUserName(userName);
+            User savedUser =  customerService.getUserByUserName(userName);
             if (savedUser != null && savedUser.getPassword().equals(password)) {
                 return new ResponseEntity<>(savedUser, HttpStatus.OK);
             } else {
@@ -43,9 +43,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping
+    @GetMapping("/customers")
     public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getAllUsers();
+        List<User> users =  customerService.getAllUsers();
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {
