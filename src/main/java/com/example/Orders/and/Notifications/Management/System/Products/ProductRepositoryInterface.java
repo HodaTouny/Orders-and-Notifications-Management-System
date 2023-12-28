@@ -8,4 +8,5 @@ public interface ProductRepositoryInterface {
     Map<Product,Integer> getProducts();
 
     boolean updateQuantity(String ID, int quantity);
+
 }

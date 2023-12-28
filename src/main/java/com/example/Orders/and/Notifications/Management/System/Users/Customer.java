@@ -79,6 +79,7 @@ public class Customer extends User {
         return balance;
     }
 
+
     public void setBalance(Long balance) {
         this.balance = balance;
     }

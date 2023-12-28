@@ -38,6 +38,7 @@ public class ProductRepository implements ProductRepositoryInterface {
         return false;
     }
 
+
     public boolean increaseQuantity(String ID, int quantity) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             if (Objects.equals(entry.getKey().getSerialNumber(), ID)){

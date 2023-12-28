@@ -7,4 +7,5 @@ public interface UserService {
     Customer getUserByUserName(String userName);
     List<Customer> getAllUsers();
 
+
 }

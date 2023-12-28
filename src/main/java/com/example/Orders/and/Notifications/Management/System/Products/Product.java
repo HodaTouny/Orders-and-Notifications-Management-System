@@ -14,6 +14,7 @@ public class Product {
 
     public Product (){}
 
+
     public String getSerialNumber() {
         return serialNumber;
     }

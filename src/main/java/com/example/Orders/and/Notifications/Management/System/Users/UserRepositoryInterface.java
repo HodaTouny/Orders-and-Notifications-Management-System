@@ -7,4 +7,5 @@ public interface UserRepositoryInterface {
     Customer saveUser(Customer user);
     Customer getUserByUserName(String username);
     List<Customer> getUsers();
+
 }
