@@ -26,9 +26,9 @@ public class ProductRepository implements ProductRepositoryInterface {
     }
 
     @Override
-    public boolean updateQuantity(int ID, int quantity) {
+    public boolean updateQuantity(String ID, int quantity) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            if (entry.getKey().getSerialNumber()==ID){
+            if (Objects.equals(entry.getKey().getSerialNumber(), ID)){
                 Product product = getProductByID(ID);
                 products.put(product, quantity);
                 return true;
@@ -38,10 +38,10 @@ public class ProductRepository implements ProductRepositoryInterface {
         return false;
     }
 
-    public int getQuantity(int ID) {
+    public int getQuantity(String ID) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            int productId = entry.getKey().getSerialNumber();
-            if (ID==productId) {
+            String productId = entry.getKey().getSerialNumber();
+            if (Objects.equals(ID, productId)) {
                 return entry.getValue();
             }
         }
@@ -50,10 +50,10 @@ public class ProductRepository implements ProductRepositoryInterface {
 
 
     @Override
-    public Product getProductByID(int ID) {
+    public Product getProductByID(String ID) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
-            if (product.getSerialNumber()==ID) {
+            if (Objects.equals(product.getSerialNumber(), ID)) {
                 return product;
             }
         }

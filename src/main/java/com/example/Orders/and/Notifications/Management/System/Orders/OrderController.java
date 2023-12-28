@@ -16,19 +16,17 @@ public class OrderController {
     OrderController(OrderService orderService){
         this.orderService = orderService;
     }
-    @PostMapping("/add/order")
+    @PostMapping("/add/simple/order")
     public ResponseEntity<Void> placeOrder(@RequestBody SimpleOrder order){
-        System.out.println(order.customer.getName());
-        System.out.println(order.getOrderProducts());
         Order returnedOrder = orderService.addOrder(order);
         if(returnedOrder != null){
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
     @GetMapping("/orders")
-    public ResponseEntity<Void> AllOrders(){
-        orderService.getAllOrders();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<Order>> AllOrders(){
+        List<Order> orders = orderService.getAllOrders();
+        return new ResponseEntity<>(orders,HttpStatus.OK);
     }
 }

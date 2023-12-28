@@ -1,20 +1,24 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
 
+import com.example.Orders.and.Notifications.Management.System.Customize.ProductSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(using = ProductSerialize.class)
 public class Product {
-    int serialNumber;
+    String serialNumber;
     String vendor;
     String name;
-    int price;
+    double price;
     Category category;
 
 
     public Product (){}
 
-    public int getSerialNumber() {
+    public String getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(int serialNumber) {
+    public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
     }
 
@@ -34,11 +38,11 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -62,7 +66,7 @@ public class Product {
         this.category = category;
     }
 
-    public Product(int serialNumber, String vendor, String name, int price, Category category) {
+    public Product(String serialNumber, String vendor, String name, double price, Category category) {
         this.serialNumber = serialNumber;
         this.vendor = vendor;
         this.name = name;

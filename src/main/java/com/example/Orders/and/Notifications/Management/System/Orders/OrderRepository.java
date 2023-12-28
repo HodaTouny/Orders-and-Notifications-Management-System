@@ -21,7 +21,7 @@ public class OrderRepository {
     }
     public Order getOrderByID(Long ID){
        for(Order order:orders){
-           if(Objects.equals(order.id, ID)) {
+           if(Objects.equals(order.getId(), ID)) {
                return order;
            }
        }

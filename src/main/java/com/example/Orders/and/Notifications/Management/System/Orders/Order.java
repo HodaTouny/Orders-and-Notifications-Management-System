@@ -1,74 +1,32 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
+
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
 
-import java.util.*;
+import java.util.Vector;
 
-public abstract class Order {
+public interface Order {
 
+    Customer getCustomer();
 
-    protected Customer customer = null;
-    protected Long id = null;
-    protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
-    protected int Price;
-    protected String ShippingAddress = null;
+    void setCustomer(Customer customer);
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    Long getId();
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    void setId(Long id);
 
-    public Long getId() {
-        return id;
-    }
+    int getPrice();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    void setPrice(int price);
 
+    String getShippingAddress();
 
+    void setShippingAddress(String shippingAddress);
 
-    public int getPrice() {
-        return Price;
-    }
+    Vector<Pair<Product, Integer>> getOrderProducts();
 
-    public void setPrice(int price) {
-        Price = price;
-    }
+    void setOrderProducts(Vector<Pair<Product, Integer>> orderProducts);
 
-    public String getShippingAddress() {
-        return ShippingAddress;
-    }
-
-    public void setShippingAddress(String shippingAddress) {
-        ShippingAddress = shippingAddress;
-    }
-
-    public Order() {
-        this.customer = null;
-        this.id = null;
-        this.orderProducts = new Vector<>();
-        ShippingAddress = null;
-    };
-
-    public Vector<Pair<Product, Integer>> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(Vector<Pair<Product, Integer>> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
-    public Order(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress) {
-        this.customer = customer;
-        this.id = id;
-        this.orderProducts = orderProducts;
-        Price = price;
-        ShippingAddress = shippingAddress;
-    }
 }
 
