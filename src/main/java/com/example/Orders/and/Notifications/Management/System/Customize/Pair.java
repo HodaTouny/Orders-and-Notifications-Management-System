@@ -1,6 +1,6 @@
-package com.example.Orders.and.Notifications.Management.System.Products;
+package com.example.Orders.and.Notifications.Management.System.Customize;
 
-class Pair<K, V> {
+public class Pair<K, V> {
     private K key;
     private V value;
 
@@ -8,6 +8,8 @@ class Pair<K, V> {
         this.key = key;
         this.value = value;
     }
+
+    public Pair() {}
 
     public K getKey() {
         return key;

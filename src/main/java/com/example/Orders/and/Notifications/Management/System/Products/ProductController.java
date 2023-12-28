@@ -1,4 +1,5 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
+import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +42,8 @@ public class ProductController {
         for (Pair<Long, Integer> pair : orderedProducts) {
             Long id = pair.getKey();
             int quantity = pair.getValue();
-
             boolean updateResult = productService.updateQuantity(id, quantity);
-
             if (!updateResult) {
-
                 Product failedProduct = productService.getProductByID(id);
                 failedUpdates.add(failedProduct);
             }
@@ -68,5 +66,13 @@ public class ProductController {
 
 
     }
+    @PostMapping("/dummy")
+    public ResponseEntity<String> dummyEndpoint(@RequestBody Vector<Pair<Product, Integer>> maya) {
+        System.out.println(maya.get(0).getKey() + " "+maya.get(0).getValue());
+        System.out.println(maya.get(1).getKey() + " "+maya.get(1).getValue());
+        return new ResponseEntity<>("lll", HttpStatus.OK);
+    }
+
+
 
 }

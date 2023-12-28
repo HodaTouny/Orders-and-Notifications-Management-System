@@ -1,19 +1,17 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
+import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Order {
 
 
-    protected Customer customer = new Customer();
+    protected Customer customer = null;
     protected Long id = null;
-    protected List<CartItem> cartItems = new ArrayList<>();
-    protected Long Price = null;
+    protected Vector<Pair<Integer,Integer>> orderProducts= new Vector<>();
+    protected int Price;
     protected String ShippingAddress = null;
 
     public Customer getCustomer() {
@@ -32,19 +30,13 @@ public abstract class Order {
         this.id = id;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
-    public Long getPrice() {
+    public int getPrice() {
         return Price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(int price) {
         Price = price;
     }
 
@@ -56,15 +48,27 @@ public abstract class Order {
         ShippingAddress = shippingAddress;
     }
 
-    public Order() {};
+    public Order() {
+        this.customer = null;
+        this.id = null;
+        this.orderProducts = new Vector<>();
+        ShippingAddress = null;
+    };
 
-    public Order(Customer customer, Long id, List<CartItem> cartItems, Long price, String shippingAddress) {
+    public Vector<Pair<Integer, Integer>> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Vector<Pair<Integer, Integer>> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
+
+    public Order(Customer customer, Long id, Vector<Pair<Integer, Integer>> orderProducts, int price, String shippingAddress) {
         this.customer = customer;
         this.id = id;
-        this.cartItems = cartItems;
+        this.orderProducts = orderProducts;
         Price = price;
         ShippingAddress = shippingAddress;
     }
-
 }
 
