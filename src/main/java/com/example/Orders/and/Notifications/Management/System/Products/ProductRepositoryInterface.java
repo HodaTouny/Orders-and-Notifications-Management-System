@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface ProductRepositoryInterface {
     Product saveproduct(Product product);
-    Product getProductByID(Long ID);
+    Product getProductByID(int ID);
     Map<Product,Integer> getProducts();
 
-    boolean updateQuantity(Long ID, int quantity);
+    boolean updateQuantity(int ID, int quantity);
 }

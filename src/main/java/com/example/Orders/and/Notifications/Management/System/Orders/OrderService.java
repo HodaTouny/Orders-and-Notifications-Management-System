@@ -23,11 +23,11 @@ public class OrderService {
     }
     public Order addOrder(Order order){
         Long fees;
-        Vector<Pair<Integer,Integer>> OrderProducts = order.getOrderProducts();
-        for(Pair<Integer, Integer> product1 : OrderProducts){
-            Long product = Long.valueOf(product1.getKey());
+        Vector<Pair<Product,Integer>> OrderProducts = order.getOrderProducts();
+        for(Pair<Product, Integer> product1 : OrderProducts){
+           Product product = product1.getKey();
             int quantity = product1.getValue();
-            productService.updateQuantity(product,quantity);
+            productService.updateQuantity(product.getSerialNumber(),quantity);
         }
         int x = order.getPrice();
         fees = (long) (0.5 * x);

@@ -12,7 +12,7 @@ import java.util.Vector;
 public class CompoundOrder extends Order{
     List<SimpleOrder> compoundOrder;
 
-    public CompoundOrder(Customer customer, Long id, Vector<Pair<Integer, Integer>> orderProducts, int price, String shippingAddress) {
+    public CompoundOrder(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress) {
         super(customer, id, orderProducts, price, shippingAddress);
         this.compoundOrder=new ArrayList<>();
     }

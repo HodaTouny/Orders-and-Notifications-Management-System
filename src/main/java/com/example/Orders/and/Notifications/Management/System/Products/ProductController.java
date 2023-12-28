@@ -37,10 +37,10 @@ public class ProductController {
         }
     }
     @PutMapping("/update/quantity")
-    public ResponseEntity<List<Product>> updateQuantity(@RequestBody Vector<Pair<Long, Integer>> orderedProducts) {
+    public ResponseEntity<List<Product>> updateQuantity(@RequestBody Vector<Pair<Integer, Integer>> orderedProducts) {
         List<Product> failedUpdates = new ArrayList<>();
-        for (Pair<Long, Integer> pair : orderedProducts) {
-            Long id = pair.getKey();
+        for (Pair<Integer, Integer> pair : orderedProducts) {
+            int id = pair.getKey();
             int quantity = pair.getValue();
             boolean updateResult = productService.updateQuantity(id, quantity);
             if (!updateResult) {
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/name")
-    public ResponseEntity<Product> getProductByID(@RequestBody Long ID){
+    public ResponseEntity<Product> getProductByID(@RequestBody int ID){
       Product product  = productService.getProductByID(ID);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

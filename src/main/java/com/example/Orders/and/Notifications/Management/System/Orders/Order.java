@@ -10,7 +10,7 @@ public abstract class Order {
 
     protected Customer customer = null;
     protected Long id = null;
-    protected Vector<Pair<Integer,Integer>> orderProducts= new Vector<>();
+    protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
     protected int Price;
     protected String ShippingAddress = null;
 
@@ -55,15 +55,15 @@ public abstract class Order {
         ShippingAddress = null;
     };
 
-    public Vector<Pair<Integer, Integer>> getOrderProducts() {
+    public Vector<Pair<Product, Integer>> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(Vector<Pair<Integer, Integer>> orderProducts) {
+    public void setOrderProducts(Vector<Pair<Product, Integer>> orderProducts) {
         this.orderProducts = orderProducts;
     }
 
-    public Order(Customer customer, Long id, Vector<Pair<Integer, Integer>> orderProducts, int price, String shippingAddress) {
+    public Order(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress) {
         this.customer = customer;
         this.id = id;
         this.orderProducts = orderProducts;

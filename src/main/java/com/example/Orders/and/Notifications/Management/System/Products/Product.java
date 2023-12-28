@@ -1,20 +1,20 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
 
 public class Product {
-    Long serialNumber;
+    int serialNumber;
     String vendor;
     String name;
-    Long price;
+    int price;
     Category category;
 
 
     public Product (){}
 
-    public Long getSerialNumber() {
+    public int getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(Long serialNumber) {
+    public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
     }
 
@@ -34,11 +34,11 @@ public class Product {
         this.name = name;
     }
 
-    public Long getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -62,7 +62,7 @@ public class Product {
         this.category = category;
     }
 
-    public Product(Long serialNumber, String vendor, String name, Long price, Category category) {
+    public Product(int serialNumber, String vendor, String name, int price, Category category) {
         this.serialNumber = serialNumber;
         this.vendor = vendor;
         this.name = name;

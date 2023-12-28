@@ -17,12 +17,12 @@ public class ProductService {
         return productRepository.saveproduct(product);
     }
 
-    public Product getProductByID(Long ID){
+    public Product getProductByID(int ID){
         return productRepository.getProductByID(ID);
     }
 
 
-    public boolean updateQuantity(Long ID, int quantity) {
+    public boolean updateQuantity(int ID, int quantity) {
         int currentQuantity = productRepository.getQuantity(ID);
        if (currentQuantity >= quantity) {
                return productRepository.updateQuantity(ID, currentQuantity - quantity);

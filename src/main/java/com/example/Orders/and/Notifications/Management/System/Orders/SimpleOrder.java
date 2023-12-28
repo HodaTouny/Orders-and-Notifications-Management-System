@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public class SimpleOrder extends Order{
 
-    public SimpleOrder(Customer customer, Long id, Vector<Pair<Integer, Integer>> orderProducts, int price, String shippingAddress) {
+    public SimpleOrder(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress) {
         super(customer, id, orderProducts, price, shippingAddress);
     }
 }
