@@ -31,9 +31,7 @@ public class OrderService {
         }
         int x = order.getPrice();
         fees = (long) (0.5 * x);
-        Long y = null;
-
-        customerService.decreaseBalance(y,fees);
+        customerService.updateBalance(order.getCustomer(),fees);
         return orderRepository.saveOrder(order);
     }
     public List<Order> getAllOrders(){
