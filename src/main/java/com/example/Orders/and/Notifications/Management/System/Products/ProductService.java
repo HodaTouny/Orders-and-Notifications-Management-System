@@ -30,6 +30,14 @@ public class ProductService {
         return false;
     }
 
+    public boolean increaseQuantity(String ID, int quantity) {
+        int currentQuantity = productRepository.getQuantity(ID);
+        if (currentQuantity >= quantity) {
+            return productRepository.increaseQuantity(ID, currentQuantity + quantity);
+        }
+        return false;
+    }
+
     public Map<Product, Integer> getAllProducts(){
         return productRepository.getProducts();
     }

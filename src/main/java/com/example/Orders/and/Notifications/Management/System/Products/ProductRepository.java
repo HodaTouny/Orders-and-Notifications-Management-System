@@ -38,6 +38,18 @@ public class ProductRepository implements ProductRepositoryInterface {
         return false;
     }
 
+    public boolean increaseQuantity(String ID, int quantity) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            if (Objects.equals(entry.getKey().getSerialNumber(), ID)){
+                Product product = getProductByID(ID);
+                products.put(product, quantity);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int getQuantity(String ID) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             String productId = entry.getKey().getSerialNumber();

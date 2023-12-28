@@ -48,13 +48,32 @@ public class ProductController {
                 failedUpdates.add(failedProduct);
             }
         }
-
         if (failedUpdates.isEmpty()) {
             return new ResponseEntity<>(failedUpdates, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(failedUpdates, HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @PutMapping("/add/quantity")
+    public ResponseEntity<List<Product>> addQuantity(@RequestBody Vector<Pair<String, Integer>> orderedProducts) {
+        List<Product> failedUpdates = new ArrayList<>();
+        for (Pair<String, Integer> pair : orderedProducts) {
+            String id = pair.getKey();
+            int quantity = pair.getValue();
+            boolean updateResult = productService.increaseQuantity(id, quantity);
+            if (!updateResult) {
+                Product failedProduct = productService.getProductByID(id);
+                failedUpdates.add(failedProduct);
+            }
+        }
+        if (failedUpdates.isEmpty()) {
+            return new ResponseEntity<>(failedUpdates, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(failedUpdates, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
 
     @GetMapping("/product/name")
     public ResponseEntity<Product> getProductByID(@RequestBody String ID){
