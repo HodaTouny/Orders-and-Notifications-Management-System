@@ -2,10 +2,7 @@ package com.example.Orders.and.Notifications.Management.System.Products;
 import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class ProductRepository implements ProductRepositoryInterface {
@@ -15,20 +12,24 @@ public class ProductRepository implements ProductRepositoryInterface {
     }
     @Override
     public Product saveproduct(Product product) {
-        if (products.containsKey(product)) {
-            int quantity = products.get(product);
-            products.put(product, quantity + 1);
-        } else {
-
-            products.put(product, 1);
-        }
-        return product;
-
-    }
-    @Override
-    public boolean updateQuantity(Product product, int quantity) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            if (entry.getKey().equals(product)) {
+
+            Product productt = entry.getKey();
+            int productCount = entry.getValue();
+            if(Objects.equals(product.getSerialNumber(), productt.getSerialNumber())) {
+                products.put(productt, productCount + 1);
+                return product;
+            }
+        }
+            products.put(product, 1);
+            return product;
+    }
+
+    @Override
+    public boolean updateQuantity(Long ID, int quantity) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            if (entry.getKey().getSerialNumber().equals(ID)){
+                Product product = getProductByID(ID);
                 products.put(product, quantity);
                 return true;
             }
@@ -37,16 +38,22 @@ public class ProductRepository implements ProductRepositoryInterface {
         return false;
     }
 
-    public int getQuantity(Product product) {
-        return products.getOrDefault(product, 0);
+    public int getQuantity(Long ID) {
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            Long productId = entry.getKey().getSerialNumber();
+            if (ID.equals(productId)) {
+                return entry.getValue();
+            }
+        }
+        return -1;
     }
 
 
     @Override
-    public Product getProductByName(String name) {
+    public Product getProductByID(Long ID) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
-            if (product.getName().equals(name)) {
+            if (product.getSerialNumber().equals(ID)) {
                 return product;
             }
         }

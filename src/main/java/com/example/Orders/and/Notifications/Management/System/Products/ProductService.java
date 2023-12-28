@@ -17,16 +17,16 @@ public class ProductService {
         return productRepository.saveproduct(product);
     }
 
-    public Product getProductByName(String Name){
-        return productRepository.getProductByName(Name);
+    public Product getProductByID(Long ID){
+        return productRepository.getProductByID(ID);
     }
 
 
-    public boolean updateQuantity(Product product, int quantity) {
-        int currentQuantity = productRepository.getQuantity(product);
-        if (currentQuantity >= quantity) {
-               return productRepository.updateQuantity(product, currentQuantity - quantity);
-           }
+    public boolean updateQuantity(Long ID, int quantity) {
+        int currentQuantity = productRepository.getQuantity(ID);
+       if (currentQuantity >= quantity) {
+               return productRepository.updateQuantity(ID, currentQuantity - quantity);
+       }
         return false;
     }
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 @RestController
 @RequestMapping("/product/api")
@@ -25,7 +26,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
-    @GetMapping("products")
+    @GetMapping("/products")
     public ResponseEntity<Map<Product,Integer>> getProducts() {
         Map<Product,Integer> products = productService.getAllProducts();
         if (!products.isEmpty()) {
@@ -35,26 +36,37 @@ public class ProductController {
         }
     }
     @PutMapping("/update/quantity")
-    public ResponseEntity<List<Product>> updateQuantity(@RequestBody Map<Product, Integer> orderedProducts) {
+    public ResponseEntity<List<Product>> updateQuantity(@RequestBody Vector<Pair<Long, Integer>> orderedProducts) {
         List<Product> failedUpdates = new ArrayList<>();
+        for (Pair<Long, Integer> pair : orderedProducts) {
+            Long id = pair.getKey();
+            int quantity = pair.getValue();
 
-        for (Map.Entry<Product, Integer> entry : orderedProducts.entrySet()) {
-            Product product = entry.getKey();
-            Integer newQuantity = entry.getValue();
-
-            boolean updateResult = productService.updateQuantity(product, newQuantity);
+            boolean updateResult = productService.updateQuantity(id, quantity);
 
             if (!updateResult) {
-                failedUpdates.add(product);
+
+                Product failedProduct = productService.getProductByID(id);
+                failedUpdates.add(failedProduct);
             }
         }
 
         if (failedUpdates.isEmpty()) {
             return new ResponseEntity<>(failedUpdates, HttpStatus.OK);
-
         } else {
-            return new ResponseEntity<>(failedUpdates,HttpStatus.NOT_ACCEPTABLE);
-
+            return new ResponseEntity<>(failedUpdates, HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @GetMapping("/product/name")
+    public ResponseEntity<Product> getProductByID(@RequestBody Long ID){
+      Product product  = productService.getProductByID(ID);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(product, HttpStatus.OK);
+
+
+    }
+
 }
