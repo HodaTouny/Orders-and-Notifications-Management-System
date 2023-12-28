@@ -1,38 +1,27 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
-
-import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
-import com.example.Orders.and.Notifications.Management.System.Products.Product;
-import com.example.Orders.and.Notifications.Management.System.Products.ProductService;
-import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Vector;
 
 @Service
 public class OrderService {
-    OrderRepository orderRepository;
-    ProductService productService;
-    CustomerService customerService;
+    OrderRepositoryImp orderRepository;
+    ManagerFactory managerFactory = new ManagerFactoryImp();
     @Autowired
-    OrderService(OrderRepository orderRepository,ProductService productService ,CustomerService customerService){
+    OrderService(OrderRepositoryImp orderRepository){
         this.orderRepository = orderRepository;
-        this.productService = productService;
-        this.customerService = customerService;
+
     }
-    public Order addOrder(Order order){
-        Long fees;
-        Vector<Pair<Product,Integer>> OrderProducts = order.getOrderProducts();
-        for(Pair<Product, Integer> product1 : OrderProducts){
-           Product product = product1.getKey();
-            int quantity = product1.getValue();
-            productService.updateQuantity(product.getSerialNumber(),quantity);
+    public boolean addOrder(Order order){
+        OrderManager orderManager = managerFactory.createManagerInstance(order.getOrderType());
+        if(orderManager.confirmOrder(order)) {
+            orderRepository.saveOrder(order);
+            return true;
         }
-        int x = order.getPrice();
-        fees = (long) (0.5 * x);
-        customerService.updateBalance(order.getCustomer(),fees);
-        return orderRepository.saveOrder(order);
+        return false;
     }
     public List<Order> getAllOrders(){
         return orderRepository.getOrders();
@@ -40,6 +29,21 @@ public class OrderService {
     public void getOrderByID(Long id){
         orderRepository.getOrderByID(id);
     }
+    public boolean cancelOrder(Order order){
+        OrderManager orderManager = managerFactory.createManagerInstance(order.getOrderType());
+        if(orderManager.cancelOrder(order)){
+            orderRepository.deletedOrder(order.getId());
+            return true;
+        }
+        return false;
 
-
+    }
+    public boolean cancelShipping(Order order){
+        OrderManager orderManager = managerFactory.createManagerInstance(order.getOrderType());
+        if(orderManager.cancelOrderShipping(order)) {
+            orderRepository.cancelShipping(order.getId());
+            return true;
+        }
+        return false;
+    }
 }
