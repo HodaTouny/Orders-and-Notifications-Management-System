@@ -13,20 +13,20 @@ public class CustomerService implements UserService {
         this.customerRepository = customerRepository;
     }
     @Override
-    public User AddNewUser(User user){
+    public Customer AddNewUser(Customer user){
 
         return customerRepository.saveUser(user);
     }
     @Override
-    public User getUserByUserName(String userName){
+    public Customer getUserByUserName(String userName){
         return customerRepository.getUserByUserName(userName);
     }
     @Override
-    public List<User> getAllUsers(){
+    public List<Customer> getAllUsers(){
         return customerRepository.getUsers();
     }
 
-    public Boolean updateBalance(User user,Long balance){
+    public Boolean updateBalance(Customer user, Long balance){
         if(user.getBalance() - balance >= 0){
             user.setBalance(user.getBalance() - balance);
             return true;

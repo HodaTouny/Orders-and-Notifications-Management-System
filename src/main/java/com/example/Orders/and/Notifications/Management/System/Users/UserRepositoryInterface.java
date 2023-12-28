@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UserRepositoryInterface {
 
-    User saveUser(User user);
-    User getUserByUserName(String username);
-    List<User> getUsers();
+    Customer saveUser(Customer user);
+    Customer getUserByUserName(String username);
+    List<Customer> getUsers();
 }

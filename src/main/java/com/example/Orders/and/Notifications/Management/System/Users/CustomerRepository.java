@@ -7,18 +7,18 @@ import java.util.Objects;
 
 @Repository
 public class CustomerRepository implements UserRepositoryInterface {
-    List<User> users;
+    List<Customer> users;
     CustomerRepository(){
         users = new ArrayList<>();
     }
     @Override
-    public User saveUser(User user) {
+    public Customer saveUser(Customer user) {
         users.add(user);
         return user;
     }
     @Override
-    public User getUserByUserName(String username) {
-        for (User user : users) {
+    public Customer getUserByUserName(String username) {
+        for (Customer user : users) {
             if (Objects.equals(user.getUserName(), username)) {
                 return user;
             }
@@ -26,7 +26,7 @@ public class CustomerRepository implements UserRepositoryInterface {
         return null;
     }
     @Override
-    public List<User> getUsers(){
+    public List<Customer> getUsers(){
         return users;
     }
 

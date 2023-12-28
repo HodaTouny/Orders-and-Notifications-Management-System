@@ -1,10 +1,8 @@
 package com.example.Orders.and.Notifications.Management.System.Users;
 
-import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,8 +20,8 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> Register(@RequestBody User user) {
-        User savedUser =  customerService.AddNewUser(user);
+    public ResponseEntity<Customer> Register(@RequestBody Customer user) {
+        Customer savedUser =  customerService.AddNewUser(user);
         if(user != null) {
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         }
@@ -31,12 +29,12 @@ public class CustomerController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<User> login(@RequestBody Vector<String> loginData) {
+    public ResponseEntity<Customer> login(@RequestBody Vector<String> loginData) {
         if (loginData.size() >= 2) {
             String userName = loginData.get(0);
             String password = loginData.get(1);
 
-            User savedUser =  customerService.getUserByUserName(userName);
+            Customer savedUser =  customerService.getUserByUserName(userName);
             if (savedUser != null && savedUser.getPassword().equals(password)) {
                 return new ResponseEntity<>(savedUser, HttpStatus.OK);
             } else {
@@ -47,8 +45,8 @@ public class CustomerController {
         }
     }
     @GetMapping("/customers")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users =  customerService.getAllUsers();
+    public ResponseEntity<List<Customer>> getUsers() {
+        List<Customer> users =  customerService.getAllUsers();
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {
@@ -56,10 +54,10 @@ public class CustomerController {
         }
     }
     @PutMapping("/update/Customer/Balance")
-    public ResponseEntity<List<User>> updateBalance(@RequestBody Map<User,Long> usersBalance){
-        List<User> noEnoughMoney = new ArrayList<>();
-        for (Map.Entry<User, Long> entry : usersBalance.entrySet()) {
-            User user = entry.getKey();
+    public ResponseEntity<List<Customer>> updateBalance(@RequestBody Map<Customer,Long> usersBalance){
+        List<Customer> noEnoughMoney = new ArrayList<>();
+        for (Map.Entry<Customer, Long> entry : usersBalance.entrySet()) {
+            Customer user = entry.getKey();
             Long balance = entry.getValue();
             if(!customerService.updateBalance(user,balance)){
                 noEnoughMoney.add(user);

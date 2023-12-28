@@ -1,10 +1,8 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
 
-import com.example.Orders.and.Notifications.Management.System.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service

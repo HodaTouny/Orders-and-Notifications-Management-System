@@ -1,7 +1,5 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
 
-import com.example.Orders.and.Notifications.Management.System.Users.User;
-
 public class Product {
     Long serialNumber;
     String vendor;
