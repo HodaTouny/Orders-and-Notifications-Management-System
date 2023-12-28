@@ -14,7 +14,6 @@ public class Product {
 
     public Product (){}
 
-
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -61,6 +60,7 @@ public class Product {
                 ", price=" + price +
                 ", category=" + category +
                 '}';
+
     }
 
     public void setCategory(Category category) {

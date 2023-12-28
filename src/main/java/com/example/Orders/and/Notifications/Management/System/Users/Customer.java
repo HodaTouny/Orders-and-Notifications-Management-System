@@ -80,6 +80,7 @@ public class Customer extends User {
     }
 
 
+
     public void setBalance(Long balance) {
         this.balance = balance;
     }

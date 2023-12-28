@@ -39,6 +39,7 @@ public class ProductRepository implements ProductRepositoryInterface {
     }
 
 
+
     public boolean increaseQuantity(String ID, int quantity) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             if (Objects.equals(entry.getKey().getSerialNumber(), ID)){

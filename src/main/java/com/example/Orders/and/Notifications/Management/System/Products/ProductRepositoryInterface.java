@@ -7,6 +7,7 @@ public interface ProductRepositoryInterface {
     Product getProductByID(String ID);
     Map<Product,Integer> getProducts();
 
+
     boolean updateQuantity(String ID, int quantity);
 
 }
