@@ -20,12 +20,12 @@ public class OrderRepositoryImp implements OrderRepository{
         return orders;
     }
     public Order getOrderByID(Long ID){
-       for(Order order:orders){
-           if(Objects.equals(order.getId(), ID)) {
-               return order;
-           }
-       }
-       return null;
+//       for(Order order:orders){
+//           if(Objects.equals(order.getId(), ID)) {
+//               return order;
+//           }
+//       }
+     return null;
     }
 
     @Override
@@ -35,16 +35,16 @@ public class OrderRepositoryImp implements OrderRepository{
         return order;
     }
 
-    @Override
+//    @Override
     public Order cancelShipping(Long ID) {
-        Order orderToCancel = null;
-        for (Order order : orders) {
-            if (order.getId().equals(ID)) {
-                order.setShippingAddress(null);
-                orderToCancel = order;
-                break;
-            }
-        }
-        return orderToCancel;
+       SimpleOrder orderToCancel = null;
+//        for (Order order : orders) {
+//            if (order.getId().equals(ID)) {
+//                order.setShippingAddress(null);
+//                orderToCancel = order;
+//                break;
+//            }
+//        }
+        return null;
     }
 }

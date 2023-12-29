@@ -1,9 +1,11 @@
 package com.example.Orders.and.Notifications.Management.System.Products;
 
+import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Vector;
 
 @Service
 public class ProductService {
@@ -38,6 +40,16 @@ public class ProductService {
             return productRepository.increaseQuantity(ID, currentQuantity + quantity);
         }
         return false;
+    }
+
+    public boolean checkAllProductsAvailability(Vector<Pair<Product,Integer>> products){
+        for(Pair<Product,Integer> prod : products){
+            int currentQuantity = productRepository.getQuantity(prod.getKey().getSerialNumber());
+            if(currentQuantity - prod.getValue() <0){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Map<Product, Integer> getAllProducts(){

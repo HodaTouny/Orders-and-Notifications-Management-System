@@ -13,12 +13,16 @@ public class OrderController {
     OrderController(OrderService orderService){
         this.orderService = orderService;
     }
-    @PostMapping("/place/order")
-    public ResponseEntity<String> placeOrder(@RequestBody Order order) {
+    @PostMapping("/place/simple/order")
+    public ResponseEntity<String> placeOrderSimple(@RequestBody SimpleOrder order) {
         if (orderService.addOrder(order)) {
             return new ResponseEntity<>("Order Placed successfully",HttpStatus.OK);
         }
-        return new ResponseEntity<>("Failed to Place Order",HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Failed to Place Order",HttpStatus.OK);
+    }
+    @PostMapping("/place/compound/order")
+    public ResponseEntity<String> placeOrderCompound(@RequestBody Order order) {
+        return new ResponseEntity<>("Placed Done",HttpStatus.OK);
     }
     @DeleteMapping("/cancel/order")
     public ResponseEntity<String> cancelOrder(@RequestBody  Order order) {
@@ -27,7 +31,6 @@ public class OrderController {
         }
         return new ResponseEntity<>("Failed to cancel Order",HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
     @PutMapping("/cancel/shipping")
     public ResponseEntity<String> cancelShipping(@RequestBody  Order order) {
         if (orderService.cancelShipping(order)) {

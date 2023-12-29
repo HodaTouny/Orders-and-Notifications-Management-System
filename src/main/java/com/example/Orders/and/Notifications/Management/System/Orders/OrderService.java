@@ -1,5 +1,4 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
-
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Products.ProductService;
@@ -12,34 +11,52 @@ import java.util.Vector;
 
 @Service
 public class OrderService {
-    OrderRepository orderRepository;
-    ProductService productService;
-    CustomerService customerService;
     @Autowired
-    OrderService(OrderRepository orderRepository,ProductService productService ,CustomerService customerService){
+    public OrderService(OrderRepositoryImp orderRepository, ProductService productService, CustomerService customerService) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.customerService = customerService;
     }
-    public Order addOrder(Order order){
-        Long fees;
-        Vector<Pair<Product,Integer>> OrderProducts = order.getOrderProducts();
-        for(Pair<Product, Integer> product1 : OrderProducts){
-           Product product = product1.getKey();
-            int quantity = product1.getValue();
-            productService.updateQuantity(product.getSerialNumber(),quantity);
+
+    OrderRepositoryImp orderRepository;
+    ProductService productService;
+    CustomerService customerService;
+
+    public boolean addOrder(SimpleOrder order){
+        Long toBeDecreased = (long) (order.getPrice() + (0.5*order.getPrice()));
+        Vector<Pair<Product,Integer>> allProducts = order.getOrderProducts();
+        if(productService.checkAllProductsAvailability(allProducts)) {
+            if (customerService.decreaseBalance(order.getCustomer().getId(), toBeDecreased)) {
+                for (Pair<Product, Integer> prod : allProducts) {
+                    productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());
+                }
+                return true;
+            }
+        }else{
+            return false;
         }
-        int x = order.getPrice();
-        fees = (long) (0.5 * x);
-        customerService.updateBalance(order.getCustomer(),fees);
-        return orderRepository.saveOrder(order);
+        customerService.increaseBalance(order.getCustomer().getId(),toBeDecreased);
+        return false;
     }
+    public boolean addOrder(CompoundOrder order){
+        List<SimpleOrder> ll = order.getCompoundOrder();
+        for(SimpleOrder i : ll){
+            addOrder(i);
+        }
+        return true;
+    }
+
     public List<Order> getAllOrders(){
         return orderRepository.getOrders();
     }
     public void getOrderByID(Long id){
         orderRepository.getOrderByID(id);
     }
+    public boolean cancelOrder(Order order){
+        return false;
 
-
+    }
+    public boolean cancelShipping(Order order){
+       return true;
+    }
 }
