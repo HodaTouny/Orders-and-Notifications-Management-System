@@ -24,6 +24,7 @@ public class OrderController {
     public ResponseEntity<String> placeOrderCompound(@RequestBody Order order) {
         return new ResponseEntity<>("Placed Done",HttpStatus.OK);
     }
+
     @DeleteMapping("/cancel/order")
     public ResponseEntity<String> cancelOrder(@RequestBody  Order order) {
         if (orderService.cancelOrder(order)) {

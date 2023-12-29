@@ -8,32 +8,10 @@ import java.util.Vector;
 
 public class SimpleOrder extends Order{
     protected Customer customer = null;
-
-    protected Long id = null;
     protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
     protected int Price;
-
     protected String ShippingAddress = null;
     protected LocalDate ShippingDate = null;
-    protected String orderType= null;
-
-
-    public SimpleOrder(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress, LocalDate shippingDate, String orderType) {
-        this.customer = customer;
-        this.id = id;
-        this.orderProducts = orderProducts;
-        Price = price;
-        ShippingAddress = shippingAddress;
-        ShippingDate = shippingDate;
-        this.orderType = orderType;
-    }
-    public String getOrderType() {
-        return orderType;
-    }
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
-    }
-
     public LocalDate getShippingDate() {
         return ShippingDate;
     }
@@ -48,14 +26,6 @@ public class SimpleOrder extends Order{
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public int getPrice() {
@@ -74,12 +44,6 @@ public class SimpleOrder extends Order{
         ShippingAddress = shippingAddress;
     }
 
-    public SimpleOrder() {
-        this.customer = null;
-        this.id = null;
-        this.orderProducts = new Vector<>();
-        ShippingAddress = null;
-    };
 
     public Vector<Pair<Product, Integer>> getOrderProducts() {
         return orderProducts;
@@ -98,7 +62,20 @@ public class SimpleOrder extends Order{
                 ", price=" + Price +
                 ", shippingAddress='" + ShippingAddress + '\'' +
                 ", shippingDate=" + ShippingDate +
-                ", orderType='" + orderType + '\'' +
+                ", orderType='" + type + '\'' +
                 '}';
+    }
+
+    public SimpleOrder(String type, Long id, Customer customer, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress, LocalDate shippingDate) {
+        super(type, id);
+        this.customer = customer;
+        this.orderProducts = orderProducts;
+        Price = price;
+        ShippingAddress = shippingAddress;
+        ShippingDate = shippingDate;
+    }
+
+    public SimpleOrder(String type, Long id) {
+        super(type, id);
     }
 }
