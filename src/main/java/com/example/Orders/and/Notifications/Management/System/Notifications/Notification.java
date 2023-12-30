@@ -4,14 +4,28 @@ import com.example.Orders.and.Notifications.Management.System.Orders.Order;
 import com.example.Orders.and.Notifications.Management.System.Orders.SimpleOrder;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
 
-public class Notification {
-    SimpleOrder order;
-    Channel channel;
-    NotificationTemplate notificationTemplate;
+import java.util.List;
 
-    public Notification(SimpleOrder order, Channel channel, NotificationTemplate notificationTemplate) {
+public class Notification {
+    private SimpleOrder order;
+    private List<Channel> channel;
+    private NotificationTemplate notificationTemplate;
+    public List<Channel> getChannels() {
+        return channel;
+    }
+
+    public NotificationTemplate getNotificationTemplate() {
+        return notificationTemplate;
+    }
+
+    public void setNotificationTemplate(NotificationTemplate notificationTemplate) {
+        this.notificationTemplate = notificationTemplate;
+    }
+
+
+    public Notification(SimpleOrder order,List<Channel>Channel , NotificationTemplate notificationTemplate) {
         this.order = order;
-        this.channel = channel;
+        this.channel = Channel;
         this.notificationTemplate = notificationTemplate;
         notificationTemplate.setContent(order);
     }
@@ -20,11 +34,11 @@ public class Notification {
         this.order = order;
     }
 
-    public Order getOrder() {
+    public SimpleOrder getOrder() {
         return order;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(List<Channel> channel) {
         this.channel = channel;
     }
 
