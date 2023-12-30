@@ -3,11 +3,10 @@ import com.example.Orders.and.Notifications.Management.System.Users.*;
 import com.example.Orders.and.Notifications.Management.System.Orders.*;
 
 public class ShipmentTemplate extends NotificationTemplate{
-    public ShipmentTemplate(String subject, String body, Customer customer, Order order) {
-        super(subject, body);
-    }
-    @Override
-    public void setBody() {
 
+
+    @Override
+    public void setContent(SimpleOrder order) {
+        this.content = "Dear"+order.getCustomer().getName()+", Order with ID :" + order.getId() + " has been shipped successfully to "+order.getShippingAddress()+".";
     }
 }

@@ -6,25 +6,21 @@ import javax.management.Notification;
 import java.util.Queue;
 
 public abstract class NotificationTemplate {
-    private Customer customer;
-    private Order order;
-    private String subject;
-    private String body;
-    private Queue<String> notifications;
-    private Channel channel;
+    String content;
 
-    public NotificationTemplate(String subject, String body) {
-        this.customer = customer;
-        this.order = order;
-        this.subject = subject;
-        this.body = body;
+    String subject;
+
+    public String getContent() {
+        return content;
     }
+
+    abstract public void setContent(SimpleOrder order);
+
     public String getSubject() {
         return subject;
     }
 
-    public String getBody() {
-        return body;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
-    public abstract  void setBody();
 }
