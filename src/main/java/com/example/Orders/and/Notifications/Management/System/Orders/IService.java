@@ -11,14 +11,11 @@ import java.util.Objects;
 @Service
 public abstract class IService {
     OrderRepositoryImp orderRepository;
-    ProductService productService;
-    CustomerService customerService;
-    @Autowired
-    public IService(OrderRepositoryImp orderRepository, ProductService productService, CustomerService customerService) {
+
+    public IService(OrderRepositoryImp orderRepository) {
         this.orderRepository = orderRepository;
-        this.productService = productService;
-        this.customerService = customerService;
     }
+
     public List<Order> getAllOrders(){
         return orderRepository.getOrders();
     }

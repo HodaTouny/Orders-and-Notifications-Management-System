@@ -10,9 +10,15 @@ import java.util.Vector;
 
 @Service
 public class SimpleOrderService extends IService {
+    ProductService productService;
+    CustomerService customerService;
+
     public SimpleOrderService(OrderRepositoryImp orderRepository, ProductService productService, CustomerService customerService) {
-        super(orderRepository, productService, customerService);
+        super(orderRepository);
+        this.productService = productService;
+        this.customerService = customerService;
     }
+
     @Override
     public boolean placeOrder(Order order) {
         Long toBeDecreased = (long) (((SimpleOrder)order).getPrice() + (0.05*((SimpleOrder)order).getPrice()));

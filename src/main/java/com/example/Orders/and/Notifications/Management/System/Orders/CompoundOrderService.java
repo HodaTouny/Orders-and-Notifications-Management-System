@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class CompoundOrderService extends IService{
     SimpleOrderService simpleOrderService;
     @Autowired
-    public CompoundOrderService(OrderRepositoryImp orderRepository, ProductService productService, CustomerService customerService) {
-        super(orderRepository, productService, customerService);
-        simpleOrderService = new SimpleOrderService(orderRepository,productService,customerService);
+    public CompoundOrderService(OrderRepositoryImp orderRepository, SimpleOrderService simpleOrderService) {
+        super(orderRepository);
+        this.simpleOrderService = simpleOrderService;
     }
 
     @Override
