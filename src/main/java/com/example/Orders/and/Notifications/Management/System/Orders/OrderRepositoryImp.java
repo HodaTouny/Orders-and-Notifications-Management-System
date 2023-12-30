@@ -32,9 +32,12 @@ public class OrderRepositoryImp implements OrderRepository{
 
     @Override
     public Order deletedOrder(Long ID) {
-        Order order = getOrderByID(ID);
-        orders.remove(order);
-        return order;
+        for (Order order : orders) {
+            if (order.getId().equals(ID)) {
+                return order;
+            }
+        }
+        return null;
     }
 
 //    @Override

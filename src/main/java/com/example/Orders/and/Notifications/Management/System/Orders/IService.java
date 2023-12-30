@@ -28,14 +28,28 @@ public abstract class IService {
     }
     public abstract boolean placeOrder(Order order);
 
+    public boolean deletedOrder(Long orderId) {
+        Order order  = orderRepository.deletedOrder(orderId);
+        if (order != null) {
+           return true;
+        }
+        return false;
+    }
+
     public boolean cancelShipping(Long id) {
-        System.out.println(orderRepository.getOrders().size());
-        for (Order order : orderRepository.getOrders()) {
+        List<Order> orders =  orderRepository.getOrders();
+        for (Object i : orders){
+          System.out.println(i+" ;;");
+       }
+       // System.out.println(orderRepository.getOrders().size());
+        for (Order order : orders) {
             System.out.println(order.getId());
             if (Objects.equals(order.getId(), id)) {
-                System.out.println("ana ena");
+               // System.out.println("ana ena");
                 LocalDate currentDate = LocalDate.now();
                 long daysUntilShipping = ChronoUnit.DAYS.between(currentDate, order.getShippingDate());
+               // long daysUntilShipping = 3;
+                System.out.println("days"+daysUntilShipping);
                 if (daysUntilShipping > 1) {
                     orderRepository.cancelShipping(id);
                     return true;

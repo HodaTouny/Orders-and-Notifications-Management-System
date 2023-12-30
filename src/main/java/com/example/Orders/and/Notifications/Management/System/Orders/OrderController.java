@@ -22,13 +22,13 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.NOT_FOUND);
     }
 
-//    @DeleteMapping("/cancel/order")
-//    public ResponseEntity<String> cancelOrder(@RequestBody  Order order) {
-//        if (orderService.cancelOrder(order)) {
-//            return new ResponseEntity<>("Order canceled successfully",HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>("Failed to cancel Order",HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @DeleteMapping("/cancel/order")
+    public ResponseEntity<String> cancelOrder(@RequestBody Long id) {
+        if (orderService.deletedOrder(id)) {
+            return new ResponseEntity<>("Order canceled successfully",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Failed to cancel Order",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     @PutMapping("/cancel/shipping")
     public ResponseEntity<String> cancelShipping(@RequestBody  Order order) {
         orderService = factoryOrder.create(order);
@@ -39,8 +39,7 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> AllOrders(@RequestBody Order order){
-        orderService = factoryOrder.create(order);
+    public ResponseEntity<List<Order>> AllOrders(){
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }
