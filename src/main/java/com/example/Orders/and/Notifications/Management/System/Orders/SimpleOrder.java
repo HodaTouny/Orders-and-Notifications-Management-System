@@ -11,7 +11,7 @@ public class SimpleOrder extends Order{
     protected Customer customer = null;
     protected int price;
     protected String shippingAddress = null;
-    protected LocalDate shippingDate = null;
+
     protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
     public Customer getCustomer() {
         return customer;
@@ -33,12 +33,6 @@ public class SimpleOrder extends Order{
     }
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
-    }
-    public LocalDate getShippingDate() {
-        return shippingDate;
-    }
-    public void setShippingDate(LocalDate shippingDate) {
-        this.shippingDate = shippingDate;
     }
     public Vector<Pair<Product, Integer>> getOrderProducts() {
         return orderProducts;

@@ -9,12 +9,13 @@ import java.util.List;
 @RequestMapping("/order/api")
 public class OrderController {
     IService orderService;
-    @Autowired
-    OrderController(CompoundOrderService orderService){
-        this.orderService = orderService;
+    FactoryOrder factoryOrder;
+    OrderController(FactoryOrderImpl factoryOrder){
+        this.factoryOrder = factoryOrder;
     }
     @PostMapping("/place/order")
     public ResponseEntity<Order> placeOrderSimple(@RequestBody Order order) {
+        orderService = factoryOrder.create(order);
         if(orderService.placeOrder(order)) {
             return new ResponseEntity<>(order, HttpStatus.OK);
         }
@@ -28,16 +29,18 @@ public class OrderController {
 //        }
 //        return new ResponseEntity<>("Failed to cancel Order",HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
-//    @PutMapping("/cancel/shipping")
-//    public ResponseEntity<String> cancelShipping(@RequestBody  Order order) {
-//        if (orderService.cancelShipping(order)) {
-//            return new ResponseEntity<>("Shipping canceled successfully",HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>("Failed to cancel shipping",HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @PutMapping("/cancel/shipping")
+    public ResponseEntity<String> cancelShipping(@RequestBody  Order order) {
+        orderService = factoryOrder.create(order);
+        if (orderService.cancelShipping(order.getId())) {
+            return new ResponseEntity<>("Shipping canceled successfully",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Failed to cancel shipping",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> AllOrders(){
+    public ResponseEntity<List<Order>> AllOrders(@RequestBody Order order){
+        orderService = factoryOrder.create(order);
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }

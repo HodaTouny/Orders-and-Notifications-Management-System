@@ -18,7 +18,6 @@ public class SimpleOrderService extends IService {
         this.productService = productService;
         this.customerService = customerService;
     }
-
     @Override
     public boolean placeOrder(Order order) {
         Long toBeDecreased = (long) (((SimpleOrder)order).getPrice() + (0.05*((SimpleOrder)order).getPrice()));
@@ -28,6 +27,7 @@ public class SimpleOrderService extends IService {
                 for (Pair<Product, Integer> prod : allProducts) {
                     productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());
                 }
+                orderRepository.saveOrder(order);
                 return true;
             }
         }else{
