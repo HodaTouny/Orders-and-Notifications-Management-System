@@ -18,11 +18,12 @@ public class CompoundOrderService extends IService{
     public boolean placeOrder(Order order) {
         CompoundOrder compoundOrder = (CompoundOrder) order;
         for (Order subOrder : compoundOrder.getCompoundOrder()) {
-            boolean subOrderPlaced = simpleOrderService.placeOrder((SimpleOrder)subOrder);
+            boolean subOrderPlaced = simpleOrderService.plaseSimpleOrder((SimpleOrder)subOrder);
             if (!subOrderPlaced) {
                 return false;
             }
         }
+        orderRepository.saveOrder(order);
         return true;
     }
 

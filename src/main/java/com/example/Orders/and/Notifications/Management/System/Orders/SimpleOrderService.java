@@ -18,8 +18,7 @@ public class SimpleOrderService extends IService {
         this.productService = productService;
         this.customerService = customerService;
     }
-    @Override
-    public boolean placeOrder(Order order) {
+    public boolean plaseSimpleOrder(Order order){
         Long toBeDecreased = (long) (((SimpleOrder)order).getPrice() + (0.05*((SimpleOrder)order).getPrice()));
         Vector<Pair<Product,Integer>> allProducts = ((SimpleOrder)order).getOrderProducts();
         if(productService.checkAllProductsAvailability(allProducts)) {
@@ -27,7 +26,6 @@ public class SimpleOrderService extends IService {
                 for (Pair<Product, Integer> prod : allProducts) {
                     productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());
                 }
-                orderRepository.saveOrder(order);
                 return true;
             }
         }else{
@@ -36,4 +34,14 @@ public class SimpleOrderService extends IService {
         customerService.increaseBalance(((SimpleOrder)order).getCustomer().getId(),toBeDecreased);
         return false;
     }
+    @Override
+    public boolean placeOrder(Order order) {
+        if(plaseSimpleOrder(order)){
+            orderRepository.saveOrder(order);
+            return true;
+        }
+        return false;
+    }
+
+
 }

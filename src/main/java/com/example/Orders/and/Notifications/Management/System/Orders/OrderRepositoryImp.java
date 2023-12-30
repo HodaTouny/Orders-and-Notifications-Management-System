@@ -13,16 +13,12 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order saveOrder(Order order) {
+        System.out.println(orders.size());
         orders.add(order);
-        for (Order i : orders){
-            System.out.println(i+"-");
-        }
+        System.out.println(orders.size());
         return order;
     }
     public List<Order> getOrders(){
-       for (Order i : orders){
-           System.out.println(i+" ;;");
-       }
         return orders;
     }
 
