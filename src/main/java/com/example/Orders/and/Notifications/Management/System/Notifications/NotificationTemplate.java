@@ -9,7 +9,6 @@ public abstract class NotificationTemplate {
     String content;
 
     String subject;
-
     public String getContent() {
         return content;
     }

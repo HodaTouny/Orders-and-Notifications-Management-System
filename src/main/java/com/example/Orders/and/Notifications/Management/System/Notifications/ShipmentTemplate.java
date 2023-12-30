@@ -3,6 +3,9 @@ import com.example.Orders.and.Notifications.Management.System.Users.*;
 import com.example.Orders.and.Notifications.Management.System.Orders.*;
 
 public class ShipmentTemplate extends NotificationTemplate{
+    ShipmentTemplate(){
+        this.subject = "shipment";
+    }
 
 
     @Override

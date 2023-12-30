@@ -10,11 +10,16 @@ import java.util.*;
 public class NotificationRepository {
     Vector<Notification> sentNotifications;
     Queue<Notification>Notifications;
+    public NotificationRepository(){
+        sentNotifications=new Vector<>();
+        Notifications=new LinkedList<>();
+    }
     public void saveNotification(Notification message){
         Notifications.add(message);
-
+        System.out.println(Notifications.size());
     }
     public Queue<Notification> getAllNotifications() {
+        System.out.println(Notifications.size());
         return Notifications;
     }
     public Vector<Notification> getSentNotifications() {
@@ -28,41 +33,44 @@ public class NotificationRepository {
         }
         return null;
     }
-    public String getMostNotifiedEmail() {
-        Vector<String> resultVector = getMostNotifiedEmailAndPhoneNumber();
-        return (resultVector != null && resultVector.size() >= 1) ? resultVector.get(0) : null;
-    }
-
-    public String getMostNotifiedPhoneNumber() {
-        Vector<String> resultVector = getMostNotifiedEmailAndPhoneNumber();
-        return (resultVector != null && resultVector.size() >= 2) ? resultVector.get(1) : null;
-    }
-
-    public Vector<String> getMostNotifiedEmailAndPhoneNumber() {
-        Map<String, Integer> emailCounts = new HashMap<>();
-        Map<String, Integer> phoneCounts = new HashMap<>();
-
+//    public String getMostPhone(){
+//        Map<String,Integer> phoneCounts=new HashMap<>();
+//        for(Notification notification:sentNotifications){
+//            for(Channel channel:notification.getChannels()){
+//                if(channel instanceof SMS){
+//                    String phone=notification.getOrder().getCustomer().getPhone();
+//                    phoneCounts.put(phone,phoneCounts.getOrDefault(phone,0)+1);
+//                }
+//            }
+//        }
+//        String mostNotifiedPhone=getMaxKey(phoneCounts);
+//        return mostNotifiedPhone;
+//    }
+//    public String getMostNotifiedEmail() {
+//        Map<String, Integer> emailCounts = new HashMap<>();
+//        Map<String, Integer> phoneCounts = new HashMap<>();
+//
+//        for (Notification notification : sentNotifications) {
+//            for (Channel channel : notification.getChannels()) {
+//                if (channel instanceof Email) {
+//                    String email = notification.getOrder().getCustomer().getEmail();
+//                    emailCounts.put(email, emailCounts.getOrDefault(email, 0) + 1);
+//                }
+//            }
+//        }
+//        String mostNotifiedEmail = getMaxKey(emailCounts);
+//        return mostNotifiedEmail;
+//    }
+    public String getMostUsedTemplate() {
+        Map<String, Integer> templateCounts = new HashMap<>();
         for (Notification notification : sentNotifications) {
-            for (Channel channel : notification.getChannels()) {
-                if (channel instanceof Email) {
-                    String email = notification.getOrder().getCustomer().getEmail();
-                    emailCounts.put(email, emailCounts.getOrDefault(email, 0) + 1);
-                } else if (channel instanceof SMS) {
-                    String phone = notification.getOrder().getCustomer().getPhone();
-                    phoneCounts.put(phone, phoneCounts.getOrDefault(phone, 0) + 1);
-                }
+            if (notification.getNotificationTemplate() != null) {
+                String subject = notification.getNotificationTemplate().subject;
+                templateCounts.put(subject, templateCounts.getOrDefault(subject, 0) + 1);
             }
         }
-        String mostNotifiedEmail = getMaxKey(emailCounts);
-        int maxEmailCount = emailCounts.getOrDefault(mostNotifiedEmail, 0);
-
-        String mostNotifiedPhone = getMaxKey(phoneCounts);
-        int maxPhoneCount = phoneCounts.getOrDefault(mostNotifiedPhone, 0);
-        Vector<String> resultVector = new Vector<>();
-        resultVector.add(mostNotifiedEmail);
-        resultVector.add(mostNotifiedPhone);
-
-        return resultVector;
+        String mostUsedTemplate = getMaxKey(templateCounts);
+        return mostUsedTemplate;
     }
 
     private String getMaxKey(Map<String, Integer> map) {
