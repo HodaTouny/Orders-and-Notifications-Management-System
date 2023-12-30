@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 @Service
-public abstract class OrderService {
+public class OrderService {
     OrderRepositoryImp orderRepository;
     ProductService productService;
     CustomerService customerService;
@@ -21,7 +21,9 @@ public abstract class OrderService {
         this.customerService = customerService;
     }
 
-    public abstract boolean addOrder(Order order);
+    public boolean addOrder(Order order) {
+        return false;
+    }
 
     public List<Order> getAllOrders(){
         return orderRepository.getOrders();
@@ -29,6 +31,12 @@ public abstract class OrderService {
     public void getOrderByID(Long id){
         orderRepository.getOrderByID(id);
     }
-    public abstract boolean cancelOrder(Order order);
-    public abstract boolean cancelShipping(Order order);
+
+    public boolean cancelOrder(Order order) {
+        return false;
+    }
+
+    public boolean cancelShipping(Order order) {
+        return false;
+    }
 }

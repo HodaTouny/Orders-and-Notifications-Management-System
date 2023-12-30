@@ -14,17 +14,14 @@ public class OrderController {
         this.orderService = orderService;
     }
     @PostMapping("/place/simple/order")
-    public ResponseEntity<String> placeOrderSimple(@RequestBody SimpleOrder order) {
-        if (orderService.addOrder(order)) {
-            return new ResponseEntity<>("Order Placed successfully",HttpStatus.OK);
-        }
+    public ResponseEntity<String> placeOrderSimple(@RequestBody CompoundOrder order) {
+
         return new ResponseEntity<>("Failed to Place Order",HttpStatus.OK);
     }
     @PostMapping("/place/compound/order")
     public ResponseEntity<String> placeOrderCompound(@RequestBody Order order) {
         return new ResponseEntity<>("Placed Done",HttpStatus.OK);
     }
-
     @DeleteMapping("/cancel/order")
     public ResponseEntity<String> cancelOrder(@RequestBody  Order order) {
         if (orderService.cancelOrder(order)) {
