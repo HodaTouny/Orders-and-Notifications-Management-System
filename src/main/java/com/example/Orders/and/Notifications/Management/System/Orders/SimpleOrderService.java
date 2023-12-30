@@ -5,43 +5,46 @@ import com.example.Orders.and.Notifications.Management.System.Products.ProductSe
 import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Vector;
 
 @Service
 public class SimpleOrderService extends IService {
-    ProductService productService;
-    CustomerService customerService;
 
-    public SimpleOrderService(OrderRepositoryImp orderRepository, ProductService productService, CustomerService customerService) {
-        super(orderRepository);
-        this.productService = productService;
-        this.customerService = customerService;
+
+    public SimpleOrderService(OrderRepository orderRepository, ProductService productService, CustomerService customerService) {
+        super(orderRepository, customerService, productService);
     }
-    public boolean plaseSimpleOrder(Order order){
-        Long toBeDecreased = (long) (((SimpleOrder)order).getPrice() + (0.05*((SimpleOrder)order).getPrice()));
+
+    public void placeSimpleOrder(Order order){
+        Long toBeDecreased = (long) (((SimpleOrder)order).getPrice());
         Vector<Pair<Product,Integer>> allProducts = ((SimpleOrder)order).getOrderProducts();
-        if(productService.checkAllProductsAvailability(allProducts)) {
-            if (customerService.decreaseBalance(((SimpleOrder)order).getCustomer().getId(), toBeDecreased)) {
-                for (Pair<Product, Integer> prod : allProducts) {
-                    productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());
-                }
-                return true;
-            }
-        }else{
-            return false;
+        customerService.decreaseBalance(((SimpleOrder)order).getCustomer().getId(), toBeDecreased) ;
+        for (Pair<Product, Integer> prod : allProducts) {
+            productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());
         }
-        customerService.increaseBalance(((SimpleOrder)order).getCustomer().getId(),toBeDecreased);
-        return false;
     }
     @Override
     public boolean placeOrder(Order order) {
-        if(plaseSimpleOrder(order)){
+        long fees = (long) calculateFees(((SimpleOrder)order).getPrice());
+        if(CheckOrderAvailability(order)) {
+            customerService.decreaseBalance(((SimpleOrder) order).getCustomer().getId(), fees);
+            placeSimpleOrder(order);
+            order.setShippingFees(fees);
             orderRepository.saveOrder(order);
-            return true;
+                return true;
+
         }
         return false;
     }
-
-
+    @Override
+    public double calculateFees(int price) {
+        return (0.10)*price;
+    }
+    @Override
+    public boolean CheckOrderAvailability(Order order){
+        long balance = (long) (((SimpleOrder) order).getPrice() + calculateFees(((SimpleOrder)order).getPrice()));
+        Vector<Pair<Product,Integer>> allProducts = ((SimpleOrder)order).getOrderProducts();
+        return productService.checkAllProductsAvailability(allProducts) &&
+                customerService.balanceAvailability(((SimpleOrder) order).getCustomer().getId(),balance);
+    }
 }

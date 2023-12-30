@@ -1,9 +1,9 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class OrderRepositoryImp implements OrderRepository{
@@ -13,9 +13,7 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order saveOrder(Order order) {
-        System.out.println(orders.size());
         orders.add(order);
-        System.out.println(orders.size());
         return order;
     }
     public List<Order> getOrders(){
@@ -23,24 +21,30 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order getOrderByID(Long ID){
-     return null;
+       for(Order order : orders){
+           if(Objects.equals(order.getId(), ID)){
+               return order;
+           }
+       }
+       return null;
     }
 
     @Override
     public Order deletedOrder(Long ID) {
         for (Order order : orders) {
             if (order.getId().equals(ID)) {
+                orders.remove(order);
                 return order;
             }
         }
         return null;
     }
-
-//    @Override
+    @Override
     public Order cancelShipping(Long ID) {;
         for (Order order : orders) {
             if (order.getId().equals(ID)) {
                 order.setShippingDate(null);
+                order.setShippingFees(0);
                 return order;
             }
         }

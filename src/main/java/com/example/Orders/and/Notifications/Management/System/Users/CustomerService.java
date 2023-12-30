@@ -66,5 +66,15 @@ public class CustomerService implements UserService {
         return false;
         }
 
-
+    public Boolean balanceAvailability(Long id, Long balance) {
+        List<Customer> users = customerRepository.getUsers();
+        for (Customer customer : users) {
+            if (Objects.equals(id, customer.getId())) {
+                if (customer.getBalance() - balance >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+}

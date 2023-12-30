@@ -13,6 +13,16 @@ import java.time.LocalDate;
 public abstract class Order {
     protected Long id = null;
     protected LocalDate shippingDate = null;
+    protected double shippingFees=0;
+
+    public long getShippingFees() {
+        return (long) shippingFees;
+    }
+
+    public void setShippingFees(double shippingFees) {
+        this.shippingFees = shippingFees;
+    }
+
     public Long getId() {
         return id;
     }
