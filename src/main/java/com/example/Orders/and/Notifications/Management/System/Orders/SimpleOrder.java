@@ -7,41 +7,12 @@ import java.time.LocalDate;
 import java.util.Vector;
 
 public class SimpleOrder extends Order{
+
     protected Customer customer = null;
-
-
+    protected int price;
+    protected String shippingAddress = null;
+    protected LocalDate shippingDate = null;
     protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
-    protected int Price;
-
-    protected String ShippingAddress = null;
-    protected LocalDate ShippingDate = null;
-
-
-
-    public SimpleOrder(Customer customer, Long id, Vector<Pair<Product, Integer>> orderProducts, int price, String shippingAddress, LocalDate shippingDate) {
-        this.customer = customer;
-        this.id = id;
-        this.orderProducts = orderProducts;
-        Price = price;
-        ShippingAddress = shippingAddress;
-        ShippingDate = shippingDate;
-        //this.orderType = orderType;
-    }
-//    public String getOrderType() {
-//        return orderType;
-//    }
-//    public void setOrderType(String orderType) {
-//        this.orderType = orderType;
-//    }
-
-    public LocalDate getShippingDate() {
-        return ShippingDate;
-    }
-
-    public void setShippingDate(LocalDate shippingDate) {
-        ShippingDate = shippingDate;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
@@ -50,55 +21,50 @@ public class SimpleOrder extends Order{
         this.customer = customer;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public int getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(int price) {
-        Price = price;
+        this.price = price;
     }
-
     public String getShippingAddress() {
-        return ShippingAddress;
+        return shippingAddress;
     }
-
     public void setShippingAddress(String shippingAddress) {
-        ShippingAddress = shippingAddress;
+        this.shippingAddress = shippingAddress;
     }
-
-    public SimpleOrder() {
-        this.customer = null;
-        this.id = null;
-        this.orderProducts = new Vector<>();
-        ShippingAddress = null;
-    };
-
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+    public void setShippingDate(LocalDate shippingDate) {
+        this.shippingDate = shippingDate;
+    }
     public Vector<Pair<Product, Integer>> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(Vector<Pair<Product, Integer>> orderProducts) {
+    public SimpleOrder(Customer customer, int price, String shippingAddress, LocalDate shippingDate, Vector<Pair<Product, Integer>> orderProducts) {
+        this.customer = customer;
+        this.price = price;
+        this.shippingAddress = shippingAddress;
+        this.shippingDate = shippingDate;
         this.orderProducts = orderProducts;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "SimpleOrder{" +
                 "customer=" + customer +
-                ", id=" + id +
+                ", Price=" + price +
+                ", ShippingAddress='" + shippingAddress + '\'' +
+                ", ShippingDate=" + shippingDate +
                 ", orderProducts=" + orderProducts +
-                ", price=" + Price +
-                ", shippingAddress='" + ShippingAddress + '\'' +
-                ", shippingDate=" + ShippingDate +
-               // ", orderType='" + orderType + '\'' +
+                ", id=" + id +
                 '}';
+    }
+
+    public void setOrderProducts(Vector<Pair<Product, Integer>> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }

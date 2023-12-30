@@ -10,6 +10,13 @@ public class CompoundOrder extends Order {
         this.compoundOrder = compoundOrder;
     }
 
+    @Override
+    public String toString() {
+        return "CompoundOrder{" +
+                "compoundOrder=" + compoundOrder +
+                ", id=" + id +
+                '}';
+    }
 
     public List<SimpleOrder> getCompoundOrder() {
         return compoundOrder;
