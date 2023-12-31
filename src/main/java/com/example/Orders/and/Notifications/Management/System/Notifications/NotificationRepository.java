@@ -69,7 +69,7 @@ public class NotificationRepository {
 
         for (Notification notification : sentNotifications) {
             if (notification.getNotificationTemplate() != null) {
-                String subject = notification.getNotificationTemplate().subject;
+                String subject = notification.getNotificationTemplate().getSubject();
                 templateCounts.put(subject, templateCounts.getOrDefault(subject, 0) + 1);
             }
         }

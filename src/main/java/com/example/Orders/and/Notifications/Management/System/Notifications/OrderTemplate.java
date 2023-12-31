@@ -12,7 +12,7 @@ public class OrderTemplate extends NotificationTemplate{
         this.subject = "order";
         this.availableLanguages.add(Language.en);
         this.availableLanguages.add(Language.fr);
-    }
+   }
     @Override
     public void setContent(SimpleOrder order, Language language) {
         if (this.availableLanguages.contains(language)){
