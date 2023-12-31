@@ -1,9 +1,11 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 
+import com.example.Orders.and.Notifications.Management.System.Notifications.Channel;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -15,7 +17,7 @@ public abstract class Order {
     protected LocalDate shippingDate = null;
     protected double shippingFees=0;
     protected String status;
-
+    protected List<Channel> channels;
     public long getShippingFees() {
         return (long) shippingFees;
     }

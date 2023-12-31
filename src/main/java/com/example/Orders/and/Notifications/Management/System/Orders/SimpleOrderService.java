@@ -34,9 +34,7 @@ public class SimpleOrderService extends IService {
         Long toBeDecreased = (long) (((SimpleOrder)order).getPrice());
         customerService.decreaseBalance(((SimpleOrder)order).getCustomer().getId(), toBeDecreased) ;
         NotificationTemplate notificationTemplate = notificationFactory.createNotification("order");
-        List<Channel> channels = new ArrayList<>();
-        channels.add(new SMS());
-        Notification notification = new Notification((SimpleOrder) order,channels,notificationTemplate);
+        Notification notification = new Notification((SimpleOrder) order,((SimpleOrder) order).getChannels(),notificationTemplate);
         notificationController.saveNotification(notification);
         for (Pair<Product, Integer> prod : allProducts) {
             productService.updateQuantity(prod.getKey().getSerialNumber(),prod.getValue());

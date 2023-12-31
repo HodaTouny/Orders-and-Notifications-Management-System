@@ -120,8 +120,7 @@ public abstract class IService {
                     System.out.println(order.getShippingDate());
                     orderRepository.ChangeStatus(order,"shipped");
                     NotificationTemplate noticationTemplate = notificationFactory.createNotification("shipment");
-                    List<Channel> channels = new Vector<>();
-                    Notification notification = new Notification( (SimpleOrder)order,channels,noticationTemplate);
+                    Notification notification = new Notification( (SimpleOrder)order,((SimpleOrder) order).getChannels(),noticationTemplate);
                     notificationController.saveNotification(notification);
 
                 }
