@@ -40,16 +40,5 @@ public class NotificationService {
         }
 
     }
-    public void getSentNotifications(){
-        notificationRepository.getSentNotifications();
-    }
-    public void processNotifications(){
-        Notification notification=notificationRepository.processNotifications();
-        if(notification!=null){
-            for(Channel channel:notification.getChannels()){
-                channel.send(notification);
-            }
-        }
 
-    }
 }

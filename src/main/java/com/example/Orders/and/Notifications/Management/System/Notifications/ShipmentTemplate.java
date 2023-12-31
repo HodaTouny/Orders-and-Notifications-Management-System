@@ -10,6 +10,6 @@ public class ShipmentTemplate extends NotificationTemplate{
 
     @Override
     public void setContent(SimpleOrder order) {
-        this.content = "Dear"+order.getCustomer().getName()+", Order with ID :" + order.getId() + " has been shipped successfully to "+order.getShippingAddress()+".";
+        this.content = "Dear "+order.getCustomer().getName()+", Order with ID :" + order.getId() + " has been shipped successfully to "+order.getShippingAddress()+".";
     }
 }

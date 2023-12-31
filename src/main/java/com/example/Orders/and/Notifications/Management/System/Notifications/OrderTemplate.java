@@ -8,6 +8,6 @@ public class OrderTemplate extends NotificationTemplate{
 
     @Override
     public void setContent(SimpleOrder order) {
-        this.content = "Dear"+order.getCustomer().getName()+", Order with ID :" + order.getId() + " has been placed successfully.";
+        this.content = "Dear "+order.getCustomer().getName()+", Order with ID :" + order.getId() + " has been placed successfully.";
     }
 }

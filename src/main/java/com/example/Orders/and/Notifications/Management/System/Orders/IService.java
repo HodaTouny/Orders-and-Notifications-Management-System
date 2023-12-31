@@ -107,13 +107,17 @@ public abstract class IService {
         }
     }
     // ship order
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 5000)
     public void shipOrder(){
         List<Order> orders = orderRepository.getOrders();
+        System.out.println(orders.size());
         for(Order order : orders){
+            System.out.println(order.getShippingDate());
+            System.out.println(order.getStatus());
             if(order.getShippingDate() != null && order.getStatus().equals("placed")){
                 LocalDate currentDate = LocalDate.now();
                 if(order.getShippingDate().isAfter(currentDate) || order.getShippingDate().isEqual(currentDate)){
+                    System.out.println(order.getShippingDate());
                     orderRepository.ChangeStatus(order,"shipped");
                     NotificationTemplate noticationTemplate = notificationFactory.createNotification("shipment");
                     List<Channel> channels = new Vector<>();

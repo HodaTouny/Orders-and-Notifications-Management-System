@@ -13,7 +13,7 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order saveOrder(Order order) {
-       order.setStatus("Placed");
+       order.setStatus("placed");
         orders.add(order);
         return order;
     }
