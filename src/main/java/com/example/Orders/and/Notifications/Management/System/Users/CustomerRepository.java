@@ -20,7 +20,7 @@ public class CustomerRepository implements UserRepositoryInterface {
     @Override
     public Customer getUserByEmail(String Email) {
         for (Customer user : users) {
-            if (Objects.equals(user.getUserName(), Email)) {
+            if (Objects.equals(user.getEmail(), Email)) {
                 return user;
             }
         }

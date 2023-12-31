@@ -21,7 +21,6 @@ public class CustomerService implements UserService {
 
     @Override
     public boolean AddNewUser(Customer user) {
-
         if (validation.isValidEmail(user.getEmail()) && validation.isValidPassword(user.getPassword())) {
             Customer existingUser = customerRepository.getUserByEmail(user.getEmail());
             if (existingUser != null) {
@@ -36,12 +35,12 @@ public class CustomerService implements UserService {
         }
 
     @Override
-    public Customer getUserByEmail(String userName) {
-        return customerRepository.getUserByEmail(userName);
+    public Customer getUserByEmail(String email) {
+        return customerRepository.getUserByEmail(email);
     }
 
-    public Customer loginUser(String username, String password) {
-        Customer existingUser = customerRepository.getUserByEmail(username);
+    public Customer loginUser(String email, String password) {
+        Customer existingUser = customerRepository.getUserByEmail(email);
         if (existingUser != null && existingUser.getPassword().equals(password)) {
             return existingUser;
         } else {
