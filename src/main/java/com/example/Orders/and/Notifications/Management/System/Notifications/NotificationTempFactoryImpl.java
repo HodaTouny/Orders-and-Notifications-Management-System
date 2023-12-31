@@ -3,7 +3,7 @@ package com.example.Orders.and.Notifications.Management.System.Notifications;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NotificationFactoryImpl implements NotificationFactory {
+public class NotificationTempFactoryImpl implements NotificationTempFactory {
     @Override
     public NotificationTemplate createNotification(String subject) {
         if (subject.equals("order")) {

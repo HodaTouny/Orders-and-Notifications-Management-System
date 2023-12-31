@@ -14,7 +14,6 @@ public class NotificationSerialize extends JsonSerializer<Notification> {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeObjectField("order", notication.getOrder());
         jsonGenerator.writeObjectField("notificationTemplate", notication.getNotificationTemplate());
-
         jsonGenerator.writeEndObject();
     }
 

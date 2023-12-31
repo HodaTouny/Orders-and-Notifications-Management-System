@@ -1,9 +1,9 @@
 package com.example.Orders.and.Notifications.Management.System.Users;
+
 public class Customer extends User {
     private String userName;
     private String password;
     private Long balance;
-
     @Override
     public String toString() {
         return "User{" +
@@ -19,14 +19,18 @@ public class Customer extends User {
     public Customer() {
         super();
     }
-    public Customer(Long id, String name, String phone, String email, String userName, String password, Long balance) {
-        super(id, name, phone, email);
+    public Customer(Long id, String name, String phone, String email, String userName, String password, Long balance, Language language) {
+        super(id, name, phone, email, language);
         this.userName = userName;
         this.password = password;
         this.balance = balance;
 
+    }public Language getLanguage() {
+        return language;
     }
-
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 
     public Long getId() {
         return id;

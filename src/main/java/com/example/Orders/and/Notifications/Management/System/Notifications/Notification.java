@@ -21,7 +21,7 @@ public class Notification {
         this.order = order;
         this.channel = Channel;
         this.notificationTemplate = notificationTemplate;
-        notificationTemplate.setContent(order);
+        notificationTemplate.setContent(order, order.getCustomer().getLanguage());
     }
     public NotificationTemplate getNotificationTemplate() {
         return notificationTemplate;

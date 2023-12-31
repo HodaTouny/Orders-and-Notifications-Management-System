@@ -3,6 +3,7 @@ package com.example.Orders.and.Notifications.Management.System.Notifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.Vector;
 
@@ -22,14 +23,14 @@ public class NotificationService {
     public Vector<Notification> getSentNotifications(){
         return notificationRepository.getSentNotifications();
     }
-    public String getMostPhone(){
-        return notificationRepository.getMostPhone();
+    public List<String> getMostNotifiedPhones(){
+        return notificationRepository.getMostNotifiedPhones();
     }
-    public String getMostNotifiedEmail(){
-        return notificationRepository.getMostNotifiedEmail();
+    public List<String> getMostNotifiedEmails(){
+        return notificationRepository.getMostNotifiedEmails();
     }
-    public String getMostUsedTemplate(){
-        return notificationRepository.getMostUsedTemplate();
+    public List<String> getMostUsedTemplates(){
+        return notificationRepository.getMostUsedTemplates();
     }
     public void processNotifications(){
         Notification notification=notificationRepository.processNotifications();

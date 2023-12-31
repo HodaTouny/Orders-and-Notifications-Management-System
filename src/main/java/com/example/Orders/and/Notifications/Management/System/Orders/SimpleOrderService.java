@@ -6,14 +6,12 @@ import com.example.Orders.and.Notifications.Management.System.Products.ProductSe
 import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 @Service
 public class SimpleOrderService extends IService {
 
-    public SimpleOrderService(OrderRepository orderRepository, ProductService productService, CustomerService customerService, NotificationFactoryImpl notificationFactory, NotificationController notificationController){
+    public SimpleOrderService(OrderRepository orderRepository, ProductService productService, CustomerService customerService, NotificationTempFactoryImpl notificationFactory, NotificationController notificationController){
         super(orderRepository, customerService, productService, notificationFactory, notificationController);
     }
     public int calculateOrderPrice(Order order){

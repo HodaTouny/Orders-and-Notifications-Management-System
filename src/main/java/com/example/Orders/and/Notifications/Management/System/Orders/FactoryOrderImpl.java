@@ -1,8 +1,8 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 
+import com.example.Orders.and.Notifications.Management.System.Notifications.*;
 import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationController;
-import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationFactory;
-import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationFactoryImpl;
+import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationTempFactoryImpl;
 import com.example.Orders.and.Notifications.Management.System.Products.ProductService;
 import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,9 @@ public class FactoryOrderImpl implements FactoryOrder {
     private final ProductService productService;
     private final CustomerService customerService;
     private final OrderRepository orderRepository;
-    private final NotificationFactoryImpl notificationFactory;
+    private final NotificationTempFactoryImpl notificationFactory;
     private final NotificationController notificationController;
-    public FactoryOrderImpl(ProductService productService, CustomerService customerService,OrderRepository orderRepository, NotificationFactoryImpl notificationFactory, NotificationController notificationController) {
+    public FactoryOrderImpl(ProductService productService, CustomerService customerService, OrderRepository orderRepository, NotificationTempFactoryImpl notificationFactory, NotificationController notificationController) {
         this.productService = productService;
         this.customerService = customerService;
         this.orderRepository = orderRepository;

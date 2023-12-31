@@ -1,21 +1,22 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
-import com.example.Orders.and.Notifications.Management.System.Notifications.Channel;
-import com.example.Orders.and.Notifications.Management.System.Notifications.Notification;
+import com.example.Orders.and.Notifications.Management.System.Notifications.*;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.security.ProtectionDomain;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Vector;
-
 public class SimpleOrder extends Order{
 
     protected Customer customer = null;
     protected int price;
     protected String shippingAddress = null;
-
     protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();
+    protected ChannelFactory channelFactory = new ChannelFactoryImpl();
     public Customer getCustomer() {
         return customer;
     }
@@ -47,14 +48,17 @@ public class SimpleOrder extends Order{
         return channels;
     }
 
-    public SimpleOrder(Customer customer, int price, String shippingAddress, LocalDate shippingDate, Vector<Pair<Product, Integer>> orderProducts, List<Channel> channels) {
+    public SimpleOrder(Customer customer, int price, String shippingAddress, LocalDate shippingDate, Vector<Pair<Product, Integer>> orderProducts, List<String>channelsTypes) {
         this.customer = customer;
         this.price = price;
         this.shippingAddress = shippingAddress;
         this.shippingDate = shippingDate;
         this.orderProducts = orderProducts;
-        this.channels = channels;
-
+        this.channels = new Vector<>();
+        for (String channelType : channelsTypes) {
+            Channel channel = channelFactory.createChannel(channelType);
+            channels.add(channel);
+        }
     }
 
     @Override

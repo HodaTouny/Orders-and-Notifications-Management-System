@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class NotificationRepository {
@@ -33,22 +34,23 @@ public class NotificationRepository {
         }
         return null;
     }
-    public String getMostPhone(){
-        Map<String,Integer> phoneCounts=new HashMap<>();
-        for(Notification notification:sentNotifications){
-            for(Channel channel:notification.getChannels()){
-                if(channel instanceof SMS){
-                    String phone=notification.getOrder().getCustomer().getPhone();
-                    phoneCounts.put(phone,phoneCounts.getOrDefault(phone,0)+1);
+    public List<String> getMostNotifiedPhones() {
+        Map<String, Integer> phoneCounts = new HashMap<>();
+
+        for (Notification notification : sentNotifications) {
+            for (Channel channel : notification.getChannels()) {
+                if (channel instanceof SMS) {
+                    String phone = notification.getOrder().getCustomer().getPhone();
+                    phoneCounts.put(phone, phoneCounts.getOrDefault(phone, 0) + 1);
                 }
             }
         }
-        String mostNotifiedPhone=getMaxKey(phoneCounts);
-        return mostNotifiedPhone;
+
+        return getMaxKeys(phoneCounts);
     }
-    public String getMostNotifiedEmail() {
+
+    public List<String> getMostNotifiedEmails() {
         Map<String, Integer> emailCounts = new HashMap<>();
-        Map<String, Integer> phoneCounts = new HashMap<>();
 
         for (Notification notification : sentNotifications) {
             for (Channel channel : notification.getChannels()) {
@@ -58,27 +60,33 @@ public class NotificationRepository {
                 }
             }
         }
-        String mostNotifiedEmail = getMaxKey(emailCounts);
-        return mostNotifiedEmail;
+
+        return getMaxKeys(emailCounts);
     }
-    public String getMostUsedTemplate() {
+
+    public List<String> getMostUsedTemplates() {
         Map<String, Integer> templateCounts = new HashMap<>();
+
         for (Notification notification : sentNotifications) {
             if (notification.getNotificationTemplate() != null) {
                 String subject = notification.getNotificationTemplate().subject;
                 templateCounts.put(subject, templateCounts.getOrDefault(subject, 0) + 1);
             }
         }
-        String mostUsedTemplate = getMaxKey(templateCounts);
-        return mostUsedTemplate;
+
+        return getMaxKeys(templateCounts);
     }
 
-    private String getMaxKey(Map<String, Integer> map) {
-        return map.entrySet()
+    private List<String> getMaxKeys(Map<String, Integer> map) {
+        int maxCount = map.values().stream().max(Integer::compare).orElse(0);
+
+        List<String> maxKeys = map.entrySet()
                 .stream()
-                .max(Map.Entry.comparingByValue())
+                .filter(entry -> entry.getValue() == maxCount)
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .collect(Collectors.toList());
+
+        return maxKeys.isEmpty() ? null : maxKeys;
     }
 
 }

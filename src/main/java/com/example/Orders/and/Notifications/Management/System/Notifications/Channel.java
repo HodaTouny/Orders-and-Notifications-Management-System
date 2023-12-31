@@ -1,5 +1,7 @@
 package com.example.Orders.and.Notifications.Management.System.Notifications;
 
-public interface Channel {
-    public void send(Notification notification);
+public abstract class Channel {
+    public Channel() {
+    }
+    public abstract void send(Notification notification);
 }

@@ -1,5 +1,6 @@
 package com.example.Orders.and.Notifications.Management.System.Customize;
 
+import com.example.Orders.and.Notifications.Management.System.Users.Language;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
@@ -20,5 +21,12 @@ public class Validation {
     public boolean isValidPassword(String password) {
         Matcher matcher = PasswordPattern.matcher(password);
         return matcher.matches();
+    }
+    public boolean isValidLanguage(Language language) {
+        for (Language lang : Language.values()) {
+            if (lang.equals(language)) {
+                return true;
+            }
+        }return false;
     }
 }

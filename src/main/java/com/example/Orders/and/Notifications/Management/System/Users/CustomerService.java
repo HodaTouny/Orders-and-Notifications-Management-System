@@ -21,7 +21,7 @@ public class CustomerService implements UserService {
 
     @Override
     public boolean AddNewUser(Customer user) {
-        if (validation.isValidEmail(user.getEmail()) && validation.isValidPassword(user.getPassword())) {
+        if (validation.isValidEmail(user.getEmail()) && validation.isValidPassword(user.getPassword()) && validation.isValidLanguage(user.getLanguage())) {
             Customer existingUser = customerRepository.getUserByEmail(user.getEmail());
             if (existingUser != null) {
                 return false;

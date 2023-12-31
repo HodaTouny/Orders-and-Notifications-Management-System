@@ -2,7 +2,7 @@ package com.example.Orders.and.Notifications.Management.System.Orders;
 
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
 import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationController;
-import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationFactoryImpl;
+import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationTempFactoryImpl;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Products.ProductService;
 import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
@@ -16,7 +16,7 @@ public class CompoundOrderService extends IService{
     SimpleOrderService simpleOrderService;
 
     @Autowired
-    public CompoundOrderService(OrderRepository orderRepository, SimpleOrderService simpleOrderService, CustomerService customerService, ProductService productService, NotificationFactoryImpl notificationFactory, NotificationController notificationController) {
+    public CompoundOrderService(OrderRepository orderRepository, SimpleOrderService simpleOrderService, CustomerService customerService, ProductService productService, NotificationTempFactoryImpl notificationFactory, NotificationController notificationController) {
         super(orderRepository, customerService, productService, notificationFactory, notificationController);
         this.simpleOrderService = simpleOrderService;
     }

@@ -27,7 +27,6 @@ password must be at least 8 chars, 1 capital letter,1 small letter,1 special cha
     @PostMapping("/register")
     public ResponseEntity<String> Register(@RequestBody Customer user) {
         boolean isValid = customerService.AddNewUser(user);
-
         if (isValid) {
             return new ResponseEntity<>("Registration has completed successfully", HttpStatus.CREATED);
         } else {

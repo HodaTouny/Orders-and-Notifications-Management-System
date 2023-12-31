@@ -21,10 +21,10 @@ public abstract class IService {
     OrderRepository orderRepository;
     CustomerService customerService;
     ProductService productService;
-    NotificationFactoryImpl notificationFactory;
+    NotificationTempFactoryImpl notificationFactory;
     NotificationController notificationController;
     @Autowired
-    public IService(OrderRepository orderRepository, CustomerService customerService, ProductService productService, NotificationFactoryImpl notificationFactory, NotificationController notificationController) {
+    public IService(OrderRepository orderRepository, CustomerService customerService, ProductService productService, NotificationTempFactoryImpl notificationFactory, NotificationController notificationController) {
         this.orderRepository = orderRepository;
         this.customerService = customerService;
         this.productService = productService;
@@ -106,14 +106,10 @@ public abstract class IService {
             }
         }
     }
-    // ship order
     @Scheduled(fixedRate = 5000)
     public void shipOrder(){
         List<Order> orders = orderRepository.getOrders();
-        System.out.println(orders.size());
         for(Order order : orders){
-            System.out.println(order.getShippingDate());
-            System.out.println(order.getStatus());
             if(order.getShippingDate() != null && order.getStatus().equals("placed")){
                 LocalDate currentDate = LocalDate.now();
                 if(order.getShippingDate().isAfter(currentDate) || order.getShippingDate().isEqual(currentDate)){
