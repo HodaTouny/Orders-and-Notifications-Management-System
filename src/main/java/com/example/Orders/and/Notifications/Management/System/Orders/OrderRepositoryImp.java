@@ -13,6 +13,7 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order saveOrder(Order order) {
+       order.setStatus("Placed");
         orders.add(order);
         return order;
     }
@@ -49,5 +50,13 @@ public class OrderRepositoryImp implements OrderRepository{
             }
         }
         return null;
+    }
+    @Override
+    public void ChangeStatus(Order order, String status) {
+        for (Order order1 : orders) {
+            if (order1.getId().equals(order.getId())) {
+                order1.setStatus(status);
+            }
+        }
     }
 }

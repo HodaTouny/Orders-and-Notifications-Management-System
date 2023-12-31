@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Queue;
+import java.util.Vector;
 
 @RestController
+
 @RequestMapping(path = "api/v1/notification")
 public class NotificationController {
     private  NotificationService notificationService;
@@ -29,29 +31,33 @@ public class NotificationController {
         }
         return new ResponseEntity<>(notifications, HttpStatus.NOT_FOUND);
     }
+    @GetMapping("/sent")
+    public ResponseEntity<Vector<Notification>> getSentNotifications(){
+        Vector<Notification> notifications=notificationService.getSentNotifications();
+        if(!notifications.isEmpty()) {
+            return new ResponseEntity<>(notifications, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(notifications, HttpStatus.NOT_FOUND);
+
+    }
     public void saveNotification(Notification notification){
         notificationService.saveNotification(notification);
     }
-   // @Scheduled(fixedRate = 5000) // Run every 5 seconds
-//    public void processNotifications(){
-//        notificationService.processNotifications();
-//    }
-    @GetMapping("/sent")
-    public void getSentNotifications(){
-        notificationService.getSentNotifications();
+    @Scheduled(fixedRate = 5000) // Run every 5 seconds & you can set any time you want
+    public void processNotifications(){
+        notificationService.processNotifications();
     }
-   // @GetMapping("/mostPhone")
-//    public String getMostPhone(){
-//        return notificationService.getMostPhone();
-//    }
-//    @GetMapping("/mostEmail")
-//    public String getMostNotifiedEmail(){
-//        return notificationService.getMostNotifiedEmail();
-//    }
+    @GetMapping("/mostPhone")
+    public String getMostPhone(){
+        return notificationService.getMostPhone();
+    }
+    @GetMapping("/mostEmail")
+    public String getMostNotifiedEmail(){
+        return notificationService.getMostNotifiedEmail();
+    }
     @GetMapping("/mostTemplate")
     public String getMostUsedTemplate(){
         return notificationService.getMostUsedTemplate();
     }
-
 
 }

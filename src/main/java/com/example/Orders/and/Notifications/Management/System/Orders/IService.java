@@ -1,12 +1,12 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
-import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationController;
-import com.example.Orders.and.Notifications.Management.System.Notifications.NotificationFactoryImpl;
+import com.example.Orders.and.Notifications.Management.System.Notifications.*;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Products.ProductService;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
 import com.example.Orders.and.Notifications.Management.System.Users.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,11 +21,15 @@ public abstract class IService {
     OrderRepository orderRepository;
     CustomerService customerService;
     ProductService productService;
+    NotificationFactoryImpl notificationFactory;
+    NotificationController notificationController;
     @Autowired
-    public IService(OrderRepository orderRepository, CustomerService customerService, ProductService productService) {
+    public IService(OrderRepository orderRepository, CustomerService customerService, ProductService productService, NotificationFactoryImpl notificationFactory, NotificationController notificationController) {
         this.orderRepository = orderRepository;
         this.customerService = customerService;
         this.productService = productService;
+        this.notificationFactory = notificationFactory;
+        this.notificationController = notificationController;
     }
 
     public List<Order> getAllOrders(){
@@ -102,8 +106,24 @@ public abstract class IService {
             }
         }
     }
+    // ship order
+    @Scheduled(fixedRate = 10000)
+    public void shipOrder(){
+        List<Order> orders = orderRepository.getOrders();
+        for(Order order : orders){
+            if(order.getShippingDate() != null && order.getStatus().equals("placed")){
+                LocalDate currentDate = LocalDate.now();
+                if(order.getShippingDate().isAfter(currentDate) || order.getShippingDate().isEqual(currentDate)){
+                    orderRepository.ChangeStatus(order,"shipped");
+                    NotificationTemplate noticationTemplate = notificationFactory.createNotification("shipment");
+                    List<Channel> channels = new Vector<>();
+                    Notification notification = new Notification( (SimpleOrder)order,channels,noticationTemplate);
+                    notificationController.saveNotification(notification);
 
-
+                }
+            }
+        }
+    }
 
 
     public abstract double calculateFees(int price);

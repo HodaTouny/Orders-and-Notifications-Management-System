@@ -33,34 +33,34 @@ public class NotificationRepository {
         }
         return null;
     }
-//    public String getMostPhone(){
-//        Map<String,Integer> phoneCounts=new HashMap<>();
-//        for(Notification notification:sentNotifications){
-//            for(Channel channel:notification.getChannels()){
-//                if(channel instanceof SMS){
-//                    String phone=notification.getOrder().getCustomer().getPhone();
-//                    phoneCounts.put(phone,phoneCounts.getOrDefault(phone,0)+1);
-//                }
-//            }
-//        }
-//        String mostNotifiedPhone=getMaxKey(phoneCounts);
-//        return mostNotifiedPhone;
-//    }
-//    public String getMostNotifiedEmail() {
-//        Map<String, Integer> emailCounts = new HashMap<>();
-//        Map<String, Integer> phoneCounts = new HashMap<>();
-//
-//        for (Notification notification : sentNotifications) {
-//            for (Channel channel : notification.getChannels()) {
-//                if (channel instanceof Email) {
-//                    String email = notification.getOrder().getCustomer().getEmail();
-//                    emailCounts.put(email, emailCounts.getOrDefault(email, 0) + 1);
-//                }
-//            }
-//        }
-//        String mostNotifiedEmail = getMaxKey(emailCounts);
-//        return mostNotifiedEmail;
-//    }
+    public String getMostPhone(){
+        Map<String,Integer> phoneCounts=new HashMap<>();
+        for(Notification notification:sentNotifications){
+            for(Channel channel:notification.getChannels()){
+                if(channel instanceof SMS){
+                    String phone=notification.getOrder().getCustomer().getPhone();
+                    phoneCounts.put(phone,phoneCounts.getOrDefault(phone,0)+1);
+                }
+            }
+        }
+        String mostNotifiedPhone=getMaxKey(phoneCounts);
+        return mostNotifiedPhone;
+    }
+    public String getMostNotifiedEmail() {
+        Map<String, Integer> emailCounts = new HashMap<>();
+        Map<String, Integer> phoneCounts = new HashMap<>();
+
+        for (Notification notification : sentNotifications) {
+            for (Channel channel : notification.getChannels()) {
+                if (channel instanceof Email) {
+                    String email = notification.getOrder().getCustomer().getEmail();
+                    emailCounts.put(email, emailCounts.getOrDefault(email, 0) + 1);
+                }
+            }
+        }
+        String mostNotifiedEmail = getMaxKey(emailCounts);
+        return mostNotifiedEmail;
+    }
     public String getMostUsedTemplate() {
         Map<String, Integer> templateCounts = new HashMap<>();
         for (Notification notification : sentNotifications) {

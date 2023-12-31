@@ -14,6 +14,7 @@ public abstract class Order {
     protected Long id = null;
     protected LocalDate shippingDate = null;
     protected double shippingFees=0;
+    protected String status;
 
     public long getShippingFees() {
         return (long) shippingFees;
@@ -37,4 +38,10 @@ public abstract class Order {
         this.shippingDate = shippingDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

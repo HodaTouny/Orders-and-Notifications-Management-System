@@ -29,7 +29,7 @@ public class FactoryOrderImpl implements FactoryOrder {
         } else if (order instanceof CompoundOrder) {
             return new CompoundOrderService(orderRepository,
                     new SimpleOrderService(orderRepository, productService, customerService,notificationFactory,notificationController),
-                    customerService,productService);
+                    customerService,productService,notificationFactory,notificationController);
         }
         return null;
     }

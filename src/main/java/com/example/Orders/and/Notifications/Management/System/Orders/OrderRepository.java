@@ -8,5 +8,6 @@ public interface OrderRepository {
     Order getOrderByID(Long ID);
     Order deletedOrder(Long ID);
     Order cancelShipping(Long ID);
+    void ChangeStatus(Order order, String status);
 
 }

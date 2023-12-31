@@ -22,22 +22,22 @@ public class NotificationService {
     public Vector<Notification> getSentNotifications(){
         return notificationRepository.getSentNotifications();
     }
-//    public String getMostPhone(){
-//        return notificationRepository.getMostPhone();
-//    }
-//    public String getMostNotifiedEmail(){
-//        return notificationRepository.getMostNotifiedEmail();
-//    }
+    public String getMostPhone(){
+        return notificationRepository.getMostPhone();
+    }
+    public String getMostNotifiedEmail(){
+        return notificationRepository.getMostNotifiedEmail();
+    }
     public String getMostUsedTemplate(){
         return notificationRepository.getMostUsedTemplate();
     }
-//    public void processNotifications(){
-//        Notification notification=notificationRepository.processNotifications();
-//        if(notification!=null){
-//            for(Channel channel:notification.getChannels()){
-//                channel.send(notification);
-//            }
-//        }
-//
-//    }
+    public void processNotifications(){
+        Notification notification=notificationRepository.processNotifications();
+        if(notification!=null){
+            for(Channel channel:notification.getChannels()){
+                channel.send(notification);
+            }
+        }
+
+    }
 }
