@@ -13,8 +13,3 @@ public class OrdersAndNotificationsManagementSystemApplication {
 	}
 
 }
-
-/* Product Categories -> Enum { DairyProducts,vegetables, Fruits , Sweets,  Electronics}
-   Customer Type -> Enum { customer , vendor}
-   Order Type -> Enum { Simple , Compound}
-*/
