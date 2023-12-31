@@ -16,7 +16,9 @@ public class CompoundOrderService extends IService{
     SimpleOrderService simpleOrderService;
 
     @Autowired
-    public CompoundOrderService(OrderRepository orderRepository, SimpleOrderService simpleOrderService, CustomerService customerService, ProductService productService, NotificationTempFactoryImpl notificationFactory, NotificationController notificationController) {
+    public CompoundOrderService(OrderRepository orderRepository, SimpleOrderService simpleOrderService, CustomerService customerService,
+                                ProductService productService, NotificationTempFactoryImpl notificationFactory,
+                                NotificationController notificationController) {
         super(orderRepository, customerService, productService, notificationFactory, notificationController);
         this.simpleOrderService = simpleOrderService;
     }

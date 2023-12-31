@@ -13,6 +13,7 @@ import java.util.Vector;
 public class SimpleOrder extends Order{
 
     protected Customer customer = null;
+
     protected int price;
     protected String shippingAddress = null;
     protected Vector<Pair<Product,Integer>> orderProducts= new Vector<>();

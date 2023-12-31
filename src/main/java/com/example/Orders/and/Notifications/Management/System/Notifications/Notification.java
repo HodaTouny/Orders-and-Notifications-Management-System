@@ -44,4 +44,7 @@ public class Notification {
         this.channel = channel;
     }
 
+    public List<Channel> getChannel() {
+        return channel;
+    }
 }
