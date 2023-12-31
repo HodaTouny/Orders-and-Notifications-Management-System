@@ -10,6 +10,7 @@ public abstract class User {
         this.name = name;
         this.phone = phone;
         this.email = email;
+
     }
     public User(){}
 

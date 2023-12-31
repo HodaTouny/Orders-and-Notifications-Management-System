@@ -15,6 +15,7 @@ public class CustomerRepository implements UserRepositoryInterface {
     public Customer saveUser(Customer user) {
         users.add(user);
         return user;
+
     }
     @Override
     public Customer getUserByEmail(String Email) {

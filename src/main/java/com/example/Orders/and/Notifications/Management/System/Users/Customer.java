@@ -24,6 +24,7 @@ public class Customer extends User {
         this.userName = userName;
         this.password = password;
         this.balance = balance;
+
     }
 
 

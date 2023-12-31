@@ -32,6 +32,7 @@ password must be at least 8 chars, 1 capital letter,1 small letter,1 special cha
             return new ResponseEntity<>("Registration has completed successfully", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("can't complete registration",HttpStatus.FORBIDDEN);
+
         }
     }
 

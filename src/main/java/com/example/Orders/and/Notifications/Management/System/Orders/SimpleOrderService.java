@@ -23,6 +23,7 @@ public class SimpleOrderService extends IService {
             price+=(prod.getKey().getPrice()*prod.getValue());
         }
         return (int) price;
+
     }
 
 

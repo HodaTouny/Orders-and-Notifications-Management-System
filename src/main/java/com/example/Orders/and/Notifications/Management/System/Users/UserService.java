@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface UserService {
     boolean AddNewUser(Customer user);
-    Customer getUserByUserName(String userName);
+    Customer getUserByEmail(String userName);
     List<Customer> getAllUsers();
+
 
 
 }

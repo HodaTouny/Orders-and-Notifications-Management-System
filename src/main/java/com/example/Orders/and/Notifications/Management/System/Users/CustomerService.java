@@ -29,13 +29,14 @@ public class CustomerService implements UserService {
             }
             customerRepository.saveUser(user);
             return true;
+
         }
         return false;
 
         }
 
     @Override
-    public Customer getUserByUserName(String userName) {
+    public Customer getUserByEmail(String userName) {
         return customerRepository.getUserByEmail(userName);
     }
 
