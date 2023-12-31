@@ -1,10 +1,12 @@
 package com.example.Orders.and.Notifications.Management.System.Orders;
 import com.example.Orders.and.Notifications.Management.System.Customize.Pair;
+import com.example.Orders.and.Notifications.Management.System.Notifications.Channel;
 import com.example.Orders.and.Notifications.Management.System.Notifications.Notification;
 import com.example.Orders.and.Notifications.Management.System.Products.Product;
 import com.example.Orders.and.Notifications.Management.System.Users.Customer;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Vector;
 
 public class SimpleOrder extends Order{
@@ -38,13 +40,21 @@ public class SimpleOrder extends Order{
     public Vector<Pair<Product, Integer>> getOrderProducts() {
         return orderProducts;
     }
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
+    }
+    public List<Channel> getChannels() {
+        return channels;
+    }
 
-    public SimpleOrder(Customer customer, int price, String shippingAddress, LocalDate shippingDate, Vector<Pair<Product, Integer>> orderProducts) {
+    public SimpleOrder(Customer customer, int price, String shippingAddress, LocalDate shippingDate, Vector<Pair<Product, Integer>> orderProducts, List<Channel> channels) {
         this.customer = customer;
         this.price = price;
         this.shippingAddress = shippingAddress;
         this.shippingDate = shippingDate;
         this.orderProducts = orderProducts;
+        this.channels = channels;
+
     }
 
     @Override
