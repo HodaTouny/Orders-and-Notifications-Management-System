@@ -13,7 +13,12 @@ public class OrderRepositoryImp implements OrderRepository{
     }
 
     public Order saveOrder(Order order) {
-       order.setStatus("placed");
+       if(order instanceof CompoundOrder){
+           for(SimpleOrder suborder : ((CompoundOrder)order).getCompoundOrder()){
+               suborder.setStatus("placed");
+           }
+       }
+        order.setStatus("placed");
         orders.add(order);
         return order;
     }

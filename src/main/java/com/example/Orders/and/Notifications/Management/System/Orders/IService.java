@@ -93,7 +93,6 @@ public abstract class IService {
             }
         }
     }
-
     public void returnProducts(Order order) {
         if (order instanceof SimpleOrder) {
             Vector<Pair<Product,Integer>> products = ((SimpleOrder) order).getOrderProducts();
@@ -110,16 +109,25 @@ public abstract class IService {
     public void shipOrder(){
         List<Order> orders = orderRepository.getOrders();
         for(Order order : orders){
-            if(order.getShippingDate() != null && order.getStatus().equals("placed")){
-                LocalDate currentDate = LocalDate.now();
-                if(order.getShippingDate().isAfter(currentDate) || order.getShippingDate().isEqual(currentDate)){
-                    System.out.println(order.getShippingDate());
-                    orderRepository.ChangeStatus(order,"shipped");
-                    NotificationTemplate noticationTemplate = notificationFactory.createNotification("shipment");
-                    Notification notification = new Notification( (SimpleOrder)order,((SimpleOrder) order).getChannels(),noticationTemplate);
-                    notificationController.saveNotification(notification);
-
+            if(order instanceof SimpleOrder){
+                ShippingLogic((SimpleOrder) order);
+            }else if(order instanceof CompoundOrder){
+                for(SimpleOrder subOrder : ((CompoundOrder)order).getCompoundOrder()){
+                    ShippingLogic(subOrder);
                 }
+            }
+
+        }
+    }
+    public void ShippingLogic(SimpleOrder order){
+        if(order.getShippingDate() != null && order.getStatus().equals("placed")){
+            LocalDate currentDate = LocalDate.now();
+            if(order.getShippingDate().isAfter(currentDate) || order.getShippingDate().isEqual(currentDate)){
+                orderRepository.ChangeStatus(order,"shipped");
+                NotificationTemplate noticationTemplate = notificationFactory.createNotification("shipment");
+                Notification notification = new Notification( (SimpleOrder)order,((SimpleOrder) order).getChannels(),noticationTemplate);
+                notificationController.saveNotification(notification);
+
             }
         }
     }

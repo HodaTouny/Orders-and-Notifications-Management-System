@@ -17,10 +17,8 @@ public class NotificationRepository {
     }
     public void saveNotification(Notification message){
         Notifications.add(message);
-        System.out.println(Notifications.size());
     }
     public Queue<Notification> getAllNotifications() {
-        System.out.println(Notifications.size());
         return Notifications;
     }
     public Vector<Notification> getSentNotifications() {
@@ -36,7 +34,6 @@ public class NotificationRepository {
     }
     public List<String> getMostNotifiedPhones() {
         Map<String, Integer> phoneCounts = new HashMap<>();
-
         for (Notification notification : sentNotifications) {
             for (Channel channel : notification.getChannels()) {
                 if (channel instanceof SMS) {
@@ -45,13 +42,11 @@ public class NotificationRepository {
                 }
             }
         }
-
         return getMaxKeys(phoneCounts);
     }
 
     public List<String> getMostNotifiedEmails() {
         Map<String, Integer> emailCounts = new HashMap<>();
-
         for (Notification notification : sentNotifications) {
             for (Channel channel : notification.getChannels()) {
                 if (channel instanceof Email) {
@@ -63,7 +58,6 @@ public class NotificationRepository {
 
         return getMaxKeys(emailCounts);
     }
-
     public List<String> getMostUsedTemplates() {
         Map<String, Integer> templateCounts = new HashMap<>();
 
@@ -79,13 +73,11 @@ public class NotificationRepository {
 
     private List<String> getMaxKeys(Map<String, Integer> map) {
         int maxCount = map.values().stream().max(Integer::compare).orElse(0);
-
         List<String> maxKeys = map.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == maxCount)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-
         return maxKeys.isEmpty() ? null : maxKeys;
     }
 
