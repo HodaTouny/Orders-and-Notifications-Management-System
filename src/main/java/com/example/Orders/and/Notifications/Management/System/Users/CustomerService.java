@@ -1,5 +1,6 @@
 package com.example.Orders.and.Notifications.Management.System.Users;
 
+import com.example.Orders.and.Notifications.Management.System.Customize.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,28 +10,37 @@ import java.util.Objects;
 @Service
 public class CustomerService implements UserService {
     CustomerRepository customerRepository;
+    Validation validation;
 
     @Autowired
-    CustomerService(CustomerRepository customerRepository) {
+    CustomerService(CustomerRepository customerRepository,Validation validation) {
         this.customerRepository = customerRepository;
+        this.validation = validation;
     }
 
+
     @Override
-    public Customer AddNewUser(Customer user) {
-        Customer existingUser = customerRepository.getUserByUserName(user.getUserName());
-        if (existingUser != null) {
-            return null;
+    public boolean AddNewUser(Customer user) {
+
+        if (validation.isValidEmail(user.getEmail()) && validation.isValidPassword(user.getPassword())) {
+            Customer existingUser = customerRepository.getUserByEmail(user.getEmail());
+            if (existingUser != null) {
+                return false;
+            }
+            customerRepository.saveUser(user);
+            return true;
         }
-        return customerRepository.saveUser(user);
-    }
+        return false;
+
+        }
 
     @Override
     public Customer getUserByUserName(String userName) {
-        return customerRepository.getUserByUserName(userName);
+        return customerRepository.getUserByEmail(userName);
     }
 
     public Customer loginUser(String username, String password) {
-        Customer existingUser = customerRepository.getUserByUserName(username);
+        Customer existingUser = customerRepository.getUserByEmail(username);
         if (existingUser != null && existingUser.getPassword().equals(password)) {
             return existingUser;
         } else {

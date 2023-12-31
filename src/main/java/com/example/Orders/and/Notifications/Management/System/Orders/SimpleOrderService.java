@@ -16,10 +16,21 @@ public class SimpleOrderService extends IService {
     public SimpleOrderService(OrderRepository orderRepository, ProductService productService, CustomerService customerService, NotificationFactoryImpl notificationFactory, NotificationController notificationController){
         super(orderRepository, customerService, productService, notificationFactory, notificationController);
     }
+    public int calculateOrderPrice(Order order){
+        Vector<Pair<Product,Integer>> allProducts = ((SimpleOrder)order).getOrderProducts();
+        double price = 0L;
+        for (Pair<Product, Integer> prod : allProducts) {
+            price+=(prod.getKey().getPrice()*prod.getValue());
+        }
+        return (int) price;
+    }
+
 
     public void placeSimpleOrder(Order order){
-        Long toBeDecreased = (long) (((SimpleOrder)order).getPrice());
         Vector<Pair<Product,Integer>> allProducts = ((SimpleOrder)order).getOrderProducts();
+        int price = calculateOrderPrice(order);
+        ((SimpleOrder) order).setPrice((int) price);
+        Long toBeDecreased = (long) (((SimpleOrder)order).getPrice());
         customerService.decreaseBalance(((SimpleOrder)order).getCustomer().getId(), toBeDecreased) ;
         NotificationTemplate notificationTemplate = notificationFactory.createNotification("order");
         List<Channel> channels = new ArrayList<>();

@@ -17,9 +17,9 @@ public class CustomerRepository implements UserRepositoryInterface {
         return user;
     }
     @Override
-    public Customer getUserByUserName(String username) {
+    public Customer getUserByEmail(String Email) {
         for (Customer user : users) {
-            if (Objects.equals(user.getUserName(), username)) {
+            if (Objects.equals(user.getUserName(), Email)) {
                 return user;
             }
         }

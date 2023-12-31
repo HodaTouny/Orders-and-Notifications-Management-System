@@ -20,20 +20,18 @@ public class CustomerController {
     CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
+/* you must enter valid email and password
+password must be at least 8 chars, 1 capital letter,1 small letter,1 special character,1 digit,no blank
 
+ */
     @PostMapping("/register")
-    public ResponseEntity<Customer> Register(@RequestBody Customer user) {
-//        Customer savedUser =  customerService.AddNewUser(user);
-//        if(user != null) {
-//            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-//        }
-//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        Customer savedUser = customerService.AddNewUser(user);
+    public ResponseEntity<String> Register(@RequestBody Customer user) {
+        boolean isValid = customerService.AddNewUser(user);
 
-        if (savedUser != null) {
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        if (isValid) {
+            return new ResponseEntity<>("Registration has completed successfully", HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("can't complete registration",HttpStatus.FORBIDDEN);
         }
     }
 
