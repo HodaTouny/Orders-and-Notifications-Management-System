@@ -9,7 +9,6 @@ public class ShipmentTemplate extends NotificationTemplate{
         this.subject = "shipment";
         this.availableLanguages.add(Language.en);
         this.availableLanguages.add(Language.fr);
-        this.availableLanguages.add(Language.ar);
     }
 
 
